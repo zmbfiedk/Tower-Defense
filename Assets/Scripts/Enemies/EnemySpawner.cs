@@ -84,12 +84,17 @@ public class EnemySpawner : MonoBehaviour
 
         if (enemyToSpawn != null)
         {
-            Instantiate(enemyToSpawn, transform.position, Quaternion.identity);
+            GameObject spawnedEnemy = Instantiate(enemyToSpawn, transform.position, Quaternion.identity);
             Debug.Log($"Spawned {enemyToSpawn.name} at level {waveChecker.GetLevel()} from '{transform.name}'");
+
+            Pathing pathing = spawnedEnemy.GetComponent<Pathing>();
+            if (pathing != null)
+                pathing.OnReachedEnd += waveChecker.EnemyReachedEnd;
 
             OnEnemySpawn?.Invoke();
         }
     }
+
 
     private void StopSpawning()
     {

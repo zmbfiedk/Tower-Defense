@@ -46,6 +46,14 @@ public class WaveChecker : MonoBehaviour
         Invoke(nameof(StartNextWave), 5f);
     }
 
+    public void EnemyReachedEnd()
+    {
+        if (!waveActive) return;
+
+        enemiesKilledThisWave++; 
+        Debug.Log($"Enemy reached end. Total processed this wave: {enemiesKilledThisWave}");
+    }
+
     private void StartNextWave()
     {
         waveNumber++;
