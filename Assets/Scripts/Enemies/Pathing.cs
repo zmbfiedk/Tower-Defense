@@ -74,7 +74,6 @@ public class Pathing : MonoBehaviour
 
         transform.position += moveDirection * distanceThisFrame;
 
-        // Check if reached target
         if (Vector3.Distance(transform.position, targetPoint.position) < 0.1f)
         {
             transform.position = targetPoint.position;

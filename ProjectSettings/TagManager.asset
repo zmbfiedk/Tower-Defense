@@ -8,6 +8,8 @@ TagManager:
   - SpawnPoint
   - Point
   - EndPoint
+  - TowerPlacement
+  - Tower
   layers:
   - Default
   - TransparentFX
