@@ -1,7 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Pathing : MonoBehaviour
 {
+
+    public Action OnReachedEnd;
+
     [Header("Tags")]
     [SerializeField] private string spawnPointTag = "SpawnPoint";
     [SerializeField] private string patrolPointTag = "PatrolPoint";
@@ -88,7 +92,7 @@ public class Pathing : MonoBehaviour
 
     private void DieAtEnd()
     {
-
+        OnReachedEnd?.Invoke();
         Destroy(gameObject);
     }
 }
