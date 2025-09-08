@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 public class Pathing : MonoBehaviour
@@ -94,5 +95,6 @@ public class Pathing : MonoBehaviour
     {
         OnReachedEnd?.Invoke();
         Destroy(gameObject);
+        Debug.Log("Enemy reached the end and is destroyed.");
     }
 }
