@@ -1,10 +1,8 @@
 using System;
-
 using UnityEngine;
 
 public class Pathing : MonoBehaviour
 {
-
     public Action OnReachedEnd;
 
     [Header("Tags")]
@@ -15,12 +13,15 @@ public class Pathing : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float speed = 1f;
     [SerializeField] private int damage = 1;
+    [SerializeField] private float maxHealth = 10f;
+    [SerializeField] private int reward = 5; // currency rewarded on death
 
     private Transform[] patrolPoints;
     private Transform spawnPoint;
     private Transform endPoint;
     private int currentTargetIndex = 0;
     private bool reachedEnd = false;
+    private float currentHealth;
 
     public float Speed
     {
@@ -36,6 +37,8 @@ public class Pathing : MonoBehaviour
 
     private void Start()
     {
+        currentHealth = maxHealth;
+
         GameObject spawnObj = GameObject.FindWithTag(spawnPointTag);
         if (spawnObj != null)
         {
@@ -48,7 +51,7 @@ public class Pathing : MonoBehaviour
         }
 
         GameObject[] points = GameObject.FindGameObjectsWithTag(patrolPointTag);
-        System.Array.Sort(points, (a, b) => a.name.CompareTo(b.name));
+        Array.Sort(points, (a, b) => a.name.CompareTo(b.name));
 
         GameObject endObj = GameObject.FindWithTag(endPointTag);
         if (endObj != null)
@@ -88,6 +91,23 @@ public class Pathing : MonoBehaviour
                 currentTargetIndex++;
             }
         }
+    }
+
+    // Call this to damage the enemy
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0f)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        CurrencyManager.Instance.AddCurrency(reward); 
+
+        Destroy(gameObject);
     }
 
     private void DieAtEnd()

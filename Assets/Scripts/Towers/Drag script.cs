@@ -4,11 +4,11 @@ using UnityEngine.EventSystems;
 public class Dragscript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("Tower Settings")]
-    [SerializeField] private GameObject towerPrefab;  
-    [SerializeField] private float snapDistance = 1f;  
+    [SerializeField] private GameObject towerPrefab;
+    [SerializeField] private float snapDistance = 1f;
     [SerializeField] private string towerPlacementTag = "TowerPlacement";
 
-    private GameObject towerClone; 
+    private GameObject towerClone;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -48,18 +48,22 @@ public class Dragscript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if (closestPlacement != null && closestDistance <= snapDistance)
         {
             TowerSpot spot = closestPlacement.GetComponent<TowerSpot>();
-            if (spot != null)
+            if (spot != null && !spot.HasTower)
             {
-                if (!spot.HasTower)
+                // Check if player has enough currency
+                if (CurrencyManager.Instance.SpendCurrency(50))
                 {
                     towerClone.transform.position = closestPlacement.position;
+                    towerClone.transform.SetParent(spot.transform, worldPositionStays: true);
+
                     SetPreviewMode(towerClone, false);
                     PreparePlacedTower(towerClone, spot);
-                    spot.PlaceTower(towerClone); 
+                    spot.PlaceTower(towerClone);
                 }
                 else
                 {
                     Destroy(towerClone);
+                    Debug.Log("Not enough currency to place tower!");
                 }
             }
             else
@@ -90,8 +94,6 @@ public class Dragscript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         Tower towerComp = tower.GetComponent<Tower>();
         if (towerComp == null) towerComp = tower.AddComponent<Tower>();
         towerComp.SetSpot(spot);
-
-        tower.transform.SetParent(spot.transform, worldPositionStays: true);
     }
 
     private void SetPreviewMode(GameObject tower, bool isPreview)
