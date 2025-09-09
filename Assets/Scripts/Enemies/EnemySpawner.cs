@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -7,28 +6,23 @@ public class EnemySpawner : MonoBehaviour
     public static event Action OnEnemySpawn;
 
     [Header("Spawn Timing")]
-    [SerializeField] private float minimumSpawnTime = 1f;
-    [SerializeField] private float maximumSpawnTime = 5f;
+    [SerializeField] private float minSpawnTime = 1f;
+    [SerializeField] private float maxSpawnTime = 5f;
 
     [Header("Enemy Prefabs")]
-    [SerializeField] private GameObject[] enemyPrefabs = new GameObject[6]; // 6 enemy types
+    [SerializeField] private GameObject[] enemyPrefabs;
 
     private float timeTillSpawn;
+    private bool canSpawn = true;
     private WaveChecker waveChecker;
-    [SerializeField] private bool canSpawn = true;
 
     private void Awake()
     {
-        // Ensure min and max spawn times are sensible
-        if (minimumSpawnTime > maximumSpawnTime)
-        {
-            float temp = minimumSpawnTime;
-            minimumSpawnTime = maximumSpawnTime;
-            maximumSpawnTime = temp;
-        }
+        if (minSpawnTime > maxSpawnTime)
+            (minSpawnTime, maxSpawnTime) = (maxSpawnTime, minSpawnTime);
 
         waveChecker = FindObjectOfType<WaveChecker>();
-        SetTimeUntilSpawn();
+        ResetSpawnTimer();
     }
 
     private void Start()
@@ -39,70 +33,37 @@ public class EnemySpawner : MonoBehaviour
             WaveChecker.OnWaveOver += StopSpawning;
             WaveChecker.OnWaveOver += () => Invoke(nameof(AllowSpawning), 9f);
         }
-        else
-        {
-            Debug.LogError("WaveChecker not found in scene!");
-        }
     }
 
     private void Update()
     {
-        if (waveChecker == null || !waveChecker.IsWaveActive()) return;
+        if (waveChecker == null || !waveChecker.IsWaveActive() || !canSpawn) return;
 
         timeTillSpawn -= Time.deltaTime;
-
-        if (timeTillSpawn <= 0 && canSpawn)
+        if (timeTillSpawn <= 0)
         {
-            // Use public getter method from WaveChecker
-            if (waveChecker.GetCurrentEnemiesInScene() >= waveChecker.GetEnemiesToKillThisWave())
-            {
-                canSpawn = false;
-                return;
-            }
-            
+            if (waveChecker.GetCurrentEnemiesInScene() < waveChecker.GetEnemiesToKillThisWave())
+                SpawnEnemy();
 
-            SpawnEnemy();
-            SetTimeUntilSpawn();
+            ResetSpawnTimer();
         }
     }
 
-    private void SetTimeUntilSpawn()
+    private void ResetSpawnTimer()
     {
-        timeTillSpawn = UnityEngine.Random.Range(minimumSpawnTime, maximumSpawnTime);
+        timeTillSpawn = UnityEngine.Random.Range(minSpawnTime, maxSpawnTime);
     }
 
     private void SpawnEnemy()
     {
-        if (enemyPrefabs == null || enemyPrefabs.Length == 0)
-        {
-            Debug.LogWarning("No enemy prefabs assigned!");
-            return;
-        }
+        if (enemyPrefabs.Length == 0) return;
 
-        int enemyTypeIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
-        GameObject enemyToSpawn = enemyPrefabs[enemyTypeIndex];
+        GameObject prefab = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)];
+        Instantiate(prefab, transform.position, Quaternion.identity);
 
-        if (enemyToSpawn != null)
-        {
-            GameObject spawnedEnemy = Instantiate(enemyToSpawn, transform.position, Quaternion.identity);
-            Debug.Log($"Spawned {enemyToSpawn.name} at level {waveChecker.GetLevel()} from '{transform.name}'");
-
-            Pathing pathing = spawnedEnemy.GetComponent<Pathing>();
-            if (pathing != null)
-                pathing.OnReachedEnd += waveChecker.EnemyReachedEnd;
-
-            OnEnemySpawn?.Invoke();
-        }
+        OnEnemySpawn?.Invoke();
     }
 
-
-    private void StopSpawning()
-    {
-        canSpawn = false;
-    }
-
-    private void AllowSpawning()
-    {
-        canSpawn = true;
-    }
+    private void StopSpawning() => canSpawn = false;
+    private void AllowSpawning() => canSpawn = true;
 }

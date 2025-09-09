@@ -7,106 +7,102 @@ public class Dragscript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     [SerializeField] private GameObject towerPrefab;
     [SerializeField] private float snapDistance = 1f;
     [SerializeField] private string towerPlacementTag = "TowerPlacement";
+    [SerializeField] private int towerCost = 50;
 
     private GameObject towerClone;
 
+    // -------------------------
+    // Drag Events
+    // -------------------------
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (towerPrefab == null) return;
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(eventData.position);
-        worldPos.z = 0f;
-        towerClone = Instantiate(towerPrefab, worldPos, Quaternion.identity);
+        if (!towerPrefab) return;
+
+        towerClone = Instantiate(towerPrefab, GetMouseWorldPos(eventData), Quaternion.identity);
         SetPreviewMode(towerClone, true);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (towerClone == null) return;
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(eventData.position);
-        worldPos.z = 0f;
-        towerClone.transform.position = worldPos;
+        if (towerClone)
+            towerClone.transform.position = GetMouseWorldPos(eventData);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (towerClone == null) return;
+        if (!towerClone) return;
 
-        GameObject[] placements = GameObject.FindGameObjectsWithTag(towerPlacementTag);
-        float closestDistance = Mathf.Infinity;
-        Transform closestPlacement = null;
+        TowerSpot spot = FindClosestSpot(towerClone.transform.position);
 
-        foreach (GameObject placement in placements)
+        if (spot != null && !spot.HasTower && CurrencyManager.Instance.SpendCurrency(towerCost))
         {
-            float distance = Vector3.Distance(towerClone.transform.position, placement.transform.position);
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closestPlacement = placement.transform;
-            }
-        }
-
-        if (closestPlacement != null && closestDistance <= snapDistance)
-        {
-            TowerSpot spot = closestPlacement.GetComponent<TowerSpot>();
-            if (spot != null && !spot.HasTower)
-            {
-                // Check if player has enough currency
-                if (CurrencyManager.Instance.SpendCurrency(50))
-                {
-                    towerClone.transform.position = closestPlacement.position;
-                    towerClone.transform.SetParent(spot.transform, worldPositionStays: true);
-
-                    SetPreviewMode(towerClone, false);
-                    PreparePlacedTower(towerClone, spot);
-                    spot.PlaceTower(towerClone);
-                }
-                else
-                {
-                    Destroy(towerClone);
-                    Debug.Log("Not enough currency to place tower!");
-                }
-            }
-            else
-            {
-                Destroy(towerClone);
-            }
+            PlaceTower(towerClone, spot);
         }
         else
         {
             Destroy(towerClone);
+            Debug.Log("Tower placement failed (invalid spot or not enough currency).");
         }
 
         towerClone = null;
     }
 
-    private void PreparePlacedTower(GameObject tower, TowerSpot spot)
+    // -------------------------
+    // Placement Helpers
+    // -------------------------
+    private Vector3 GetMouseWorldPos(PointerEventData eventData)
     {
-        tower.tag = "Tower";
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(eventData.position);
+        worldPos.z = 0f;
+        return worldPos;
+    }
 
-        Collider2D[] cols = tower.GetComponentsInChildren<Collider2D>();
-        foreach (var c in cols) c.enabled = true;
+    private TowerSpot FindClosestSpot(Vector3 position)
+    {
+        GameObject[] placements = GameObject.FindGameObjectsWithTag(towerPlacementTag);
+        TowerSpot closestSpot = null;
+        float closestDist = snapDistance;
 
-        Rigidbody2D rb = tower.GetComponent<Rigidbody2D>();
-        if (rb == null) rb = tower.AddComponent<Rigidbody2D>();
+        foreach (GameObject placement in placements)
+        {
+            float dist = Vector3.Distance(position, placement.transform.position);
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                closestSpot = placement.GetComponent<TowerSpot>();
+            }
+        }
+
+        return closestSpot;
+    }
+
+    private void PlaceTower(GameObject tower, TowerSpot spot)
+    {
+        tower.transform.position = spot.transform.position;
+        tower.transform.SetParent(spot.transform);
+
+        SetPreviewMode(tower, false);
+
+        Rigidbody2D rb = tower.GetComponent<Rigidbody2D>() ?? tower.AddComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.gravityScale = 0f;
 
-        Tower towerComp = tower.GetComponent<Tower>();
-        if (towerComp == null) towerComp = tower.AddComponent<Tower>();
+        Tower towerComp = tower.GetComponent<Tower>() ?? tower.AddComponent<Tower>();
         towerComp.SetSpot(spot);
+
+        spot.PlaceTower(tower);
     }
 
     private void SetPreviewMode(GameObject tower, bool isPreview)
     {
-        SpriteRenderer[] renderers = tower.GetComponentsInChildren<SpriteRenderer>();
-        foreach (var r in renderers)
+        foreach (var r in tower.GetComponentsInChildren<SpriteRenderer>())
         {
             Color c = r.color;
             c.a = isPreview ? 0.5f : 1f;
             r.color = c;
         }
 
-        Collider2D[] colliders = tower.GetComponentsInChildren<Collider2D>();
-        foreach (var col in colliders) col.enabled = !isPreview;
+        foreach (var col in tower.GetComponentsInChildren<Collider2D>())
+            col.enabled = !isPreview;
     }
 }

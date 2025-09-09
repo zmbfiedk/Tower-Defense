@@ -6,68 +6,71 @@ public class WaveChecker : MonoBehaviour
     public static event Action OnMaxEnemySpawn;
     public static event Action OnWaveOver;
 
-    [SerializeField] private string enemyTag = "Enemy"; // Enemy prefab tag
-    [SerializeField] private int maxEnemyAmount = 1;
-
-    [SerializeField] private int waveNumber = 0;
-    [SerializeField] private int enemiesKilledThisWave = 0;
+    [Header("Settings")]
+    [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private int enemiesToKillThisWave = 1;
 
-    private bool waveActive = true;
+    [SerializeField] private int waveNumber = 0;
+    [SerializeField] private int enemiesKilled = 0;
+    [SerializeField]private bool waveActive = true;
 
-    void Update()
+    private void Update()
     {
-        int currentEnemyCount = GameObject.FindGameObjectsWithTag(enemyTag).Length;
+        int currentEnemies = GameObject.FindGameObjectsWithTag(enemyTag).Length;
 
-        if (currentEnemyCount >= maxEnemyAmount)
+        if (currentEnemies >= enemiesToKillThisWave)
             OnMaxEnemySpawn?.Invoke();
 
-        maxEnemyAmount = enemiesToKillThisWave;
-
-        if (waveActive && enemiesKilledThisWave >= enemiesToKillThisWave)
-        {
+        if (waveActive && enemiesKilled >= enemiesToKillThisWave)
             EndWave();
-        }
     }
 
     public void EnemyKilled()
     {
         if (!waveActive) return;
-
-        enemiesKilledThisWave++;
-        Debug.Log($"Enemy killed. Total killed this wave: {enemiesKilledThisWave}");
-    }
-
-    private void EndWave()
-    {
-        waveActive = false;
-        Debug.Log($"Wave {waveNumber} ended!");
-        OnWaveOver?.Invoke();
-        Invoke(nameof(StartNextWave), 5f);
+        enemiesKilled++;
+        Debug.Log($"[WaveChecker] EnemyKilled received. {enemiesKilled}/{enemiesToKillThisWave}");
     }
 
     public void EnemyReachedEnd()
     {
         if (!waveActive) return;
+        enemiesKilled++;
+        Debug.Log($"[WaveChecker] EnemyReachedEnd received. {enemiesKilled}/{enemiesToKillThisWave}");
+    }
 
-        enemiesKilledThisWave++; 
-        Debug.Log($"Enemy reached end. Total processed this wave: {enemiesKilledThisWave}");
+    private void EndWave()
+    {
+        waveActive = false;
+        Debug.Log($"[WaveChecker] Wave {waveNumber} ended.");
+        OnWaveOver?.Invoke();
+        Invoke(nameof(StartNextWave), 5f);
     }
 
     private void StartNextWave()
     {
         waveNumber++;
-        enemiesKilledThisWave = 0;
+        enemiesKilled = 0;
         enemiesToKillThisWave += 5;
         waveActive = true;
-        Debug.Log($"Wave {waveNumber} started! (Level {GetLevel()})");
+        Debug.Log($"[WaveChecker] Wave {waveNumber} started. Kill {enemiesToKillThisWave} enemies.");
     }
 
-    // Public getters
+    private void OnEnable()
+    {
+        Enemy.OnEnemyKilled += EnemyKilled;
+        Enemy.OnEnemyReachedEnd += EnemyReachedEnd; 
+    }
+
+    private void OnDisable()
+    {
+        Enemy.OnEnemyKilled -= EnemyKilled;
+        Enemy.OnEnemyReachedEnd -= EnemyReachedEnd;
+    }
+
+    // Public Getters
     public int GetWaveNumber() => waveNumber;
     public bool IsWaveActive() => waveActive;
     public int GetEnemiesToKillThisWave() => enemiesToKillThisWave;
     public int GetCurrentEnemiesInScene() => GameObject.FindGameObjectsWithTag(enemyTag).Length;
-
-    public float GetLevel() => Mathf.Clamp(1 + ((waveNumber - 1) / 10), 1, 3);
 }

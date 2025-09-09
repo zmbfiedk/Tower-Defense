@@ -1,74 +1,87 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[RequireComponent(typeof(Pathing))]
 public class Enemy : MonoBehaviour
 {
-    [Header("Enemy Stats")]
-    public float maxHealth = 10f;
-    public float speed = 2f;
-    public int reward = 5; // currency given when killed
+    // Events for WaveChecker
+    public static event Action OnEnemyKilled;
+    public static event Action OnEnemyReachedEnd;
+
+    [Header("Stats")]
+    [SerializeField] private float maxHealth = 10f;
+    [SerializeField] private int damage = 1;
+    [SerializeField] private int reward = 5;
+    [SerializeField] private float speed = 1f;
 
     private float currentHealth;
+    private Pathing pathing;
+    private CurrencyManager currencyManager;
 
-    [Header("Path Settings")]
-    public Transform[] pathPoints; 
-    private int currentPointIndex = 0;
-
-    void Start()
+    private void Awake()
     {
         currentHealth = maxHealth;
-
-        if (pathPoints.Length > 0)
-        {
-            transform.position = pathPoints[0].position;
-            currentPointIndex = 1;
-        }
+        pathing = GetComponent<Pathing>();
     }
 
-    void Update()
+    private void Start()
     {
-        MoveAlongPath();
+        // Try to find CurrencyManager in scene
+        GameObject obj = GameObject.FindGameObjectWithTag("Currency manager");
+        if (obj != null)
+            currencyManager = obj.GetComponent<CurrencyManager>();
+        else
+            Debug.LogWarning("[Enemy] No CurrencyManager found in scene!");
     }
 
-    void MoveAlongPath()
+    private void OnEnable()
     {
-        if (currentPointIndex >= pathPoints.Length) return;
+        if (pathing != null)
+            pathing.OnReachedEnd += HandleReachedEnd;
+    }
 
-        Vector3 target = pathPoints[currentPointIndex].position;
-        Vector3 direction = (target - transform.position).normalized;
+    private void OnDisable()
+    {
+        if (pathing != null)
+            pathing.OnReachedEnd -= HandleReachedEnd;
+    }
 
-        transform.position += direction * speed * Time.deltaTime;
-
-        if (Vector3.Distance(transform.position, target) < 0.1f)
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
         {
-            currentPointIndex++;
-
-            if (currentPointIndex >= pathPoints.Length)
-            {
-                ReachGoal();
-            }
+            TakeDamage(1f);
+            Destroy(collision.gameObject);
         }
     }
 
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
+        Debug.Log($"[Enemy] {name} took {amount} damage, current health: {currentHealth}");
+
         if (currentHealth <= 0f)
-        {
             Die();
-        }
     }
 
-    void Die()
+    private void Die()
     {
-        CurrencyManager.Instance.AddCurrency(reward); 
+        // Add currency if manager is assigned
+        if (currencyManager != null)
+            currencyManager.AddCurrency(reward);
+        else
+            Debug.LogWarning("[Enemy] CurrencyManager not assigned!");
+
+        Debug.Log($"[Enemy] {name} died, invoking OnEnemyKilled");
+        OnEnemyKilled?.Invoke();
 
         Destroy(gameObject);
     }
 
-    void ReachGoal()
+    private void HandleReachedEnd()
     {
+        Debug.Log($"[Enemy] {name} reached end, invoking OnEnemyReachedEnd");
+        OnEnemyReachedEnd?.Invoke();
         Destroy(gameObject);
     }
 }
