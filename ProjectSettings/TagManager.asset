@@ -8,6 +8,10 @@ TagManager:
   - SpawnPoint
   - Point
   - EndPoint
+  - TowerPlacement
+  - Tower
+  - Bullet
+  - Currency manager
   layers:
   - Default
   - TransparentFX
