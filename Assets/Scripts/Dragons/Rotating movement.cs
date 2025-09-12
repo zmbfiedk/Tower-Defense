@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class RotatingTower : MonoBehaviour
 {
+
+
     [Header("Orbit & Attack Settings")]
     [SerializeField] private float rotationSpeed = 50f;
     [SerializeField] private float attackRange = 3f;
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private GameObject projectilePrefab;
-
+    [SerializeField] private string  TowerType = "SingleShot";
     private Transform spot;
     private float fireCooldown = 0f;
     private bool isPlaced = false;
@@ -17,7 +18,6 @@ public class RotatingTower : MonoBehaviour
 
     void Update()
     {
-        // Check if the tower has been placed
         if (!isPlaced)
         {
             if (transform.parent != null)
@@ -47,10 +47,18 @@ public class RotatingTower : MonoBehaviour
 
         // Shooting logic
         fireCooldown -= Time.deltaTime;
-        if (fireCooldown <= 0f)
+        if (fireCooldown <= 0f && gameObject.tag == "TripleShot")
         {
             ShootAtEnemy();
             fireCooldown = 1f / fireRate;
+            Debug.Log("Firing Triple Shot");
+        }
+        fireCooldown -= Time.deltaTime;
+        if (fireCooldown <= 0f )
+        {
+            ShootAtEnemy();
+            fireCooldown = 1f / fireRate;
+            Debug.Log("is being fired Singleshot");
         }
     }
 
