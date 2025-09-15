@@ -161,6 +161,7 @@ MonoBehaviour:
   attackRange: 4
   fireRate: 5
   projectilePrefab: {fileID: 6815579030488834856, guid: 428512f50db5b274792747bc9f903bfd, type: 3}
+  towerType: 1
 --- !u!50 &-2063162681682027371
 Rigidbody2D:
   serializedVersion: 4
