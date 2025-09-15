@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+
+
 public class Pathing : MonoBehaviour
 {
     public event Action OnReachedEnd;
@@ -13,7 +15,7 @@ public class Pathing : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float speed = 1f;
 
-    private Transform[] patrolPoints;
+    [SerializeField] private Transform[] patrolPoints;
     private int currentTargetIndex = 0;
 
     private void Start()
@@ -30,7 +32,7 @@ public class Pathing : MonoBehaviour
         GameObject endObj = GameObject.FindWithTag(endPointTag);
 
         // Build path
-        int totalPoints = points.Length + (endObj != null ? 1 : 0);
+        int totalPoints = points .Length + (endObj != null ? 1 : 0);
         patrolPoints = new Transform[totalPoints];
         for (int i = 0; i < points.Length; i++)
             patrolPoints[i] = points[i].transform;
@@ -60,3 +62,4 @@ public class Pathing : MonoBehaviour
         }
     }
 }
+

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 558817430184602585}
   - component: {fileID: -2063162681682027371}
   m_Layer: 0
-  m_Name: Hexagon Flat-Top
+  m_Name: Hexagon Flat-Top 1
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 1, g: 0.8106513, b: 0, a: 1}
+  m_Color: {r: 0.20711446, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -157,11 +157,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c16d1552000415f4184f695db2ef14f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 50
-  attackRange: 4
-  fireRate: 5
+  rotationSpeed: 100
+  attackRange: 3
+  fireRate: 6
   projectilePrefab: {fileID: 6815579030488834856, guid: 428512f50db5b274792747bc9f903bfd, type: 3}
-  towerType: 1
+  towerType: 3
 --- !u!50 &-2063162681682027371
 Rigidbody2D:
   serializedVersion: 4
