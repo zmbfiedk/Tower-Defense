@@ -46,7 +46,7 @@ Hier voeg je schetsen of mockups in van je level, UI en HUD.
 - **Normal** – Balanced stats.  
 - **Fast** – Weak but very quick.  
 - **Heavy** – Slow, tanky, resistant to some effects.  
-- **Support** – Buffs/heals other enemies.  
+- **Support** – Heals other enemies.  
 - **Invisible** – Hard to detect, requires special towers to reveal.  
 
 📌 Alle eigenschappen zijn uitgewerkt in Trello.  
