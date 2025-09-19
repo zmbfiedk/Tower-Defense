@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6780008606059215533}
   - component: {fileID: 8400844561282612695}
   - component: {fileID: 389064168780305811}
+  - component: {fileID: 3418223466003686749}
   m_Layer: 0
   m_Name: Healer
   m_TagString: Enemy
@@ -103,6 +104,7 @@ MonoBehaviour:
   patrolPointTag: Point
   endPointTag: EndPoint
   speed: 1
+  patrolPoints: []
 --- !u!58 &8400844561282612695
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -154,3 +156,19 @@ MonoBehaviour:
   damage: 1
   reward: 25
   speed: 1
+  currentHealth: 0
+--- !u!114 &3418223466003686749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116604bfc3049124eb7f2f81a8704d22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healRange: 5
+  healAmount: 0.1
+  healInterval: 0.2

@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int reward = 5;
     [SerializeField] private float speed;
 
-    private float currentHealth;
+    [SerializeField]private float currentHealth;
     private Pathing pathing;
     private CurrencyManager currencyManager;
 
