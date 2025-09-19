@@ -12,6 +12,7 @@ TagManager:
   - Tower
   - Bullet
   - Currency manager
+  - Boss
   layers:
   - Default
   - TransparentFX

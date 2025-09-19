@@ -5,6 +5,7 @@ public class WaveChecker : MonoBehaviour
 {
     public static event Action OnMaxEnemySpawn;
     public static event Action OnWaveOver;
+    public static event Action OnBossWave;
 
     [Header("Settings")]
     [SerializeField] private string enemyTag = "Enemy";
@@ -12,20 +13,32 @@ public class WaveChecker : MonoBehaviour
 
     [SerializeField] private int waveNumber = 0;
     [SerializeField] private int enemiesKilled = 0;
-    [SerializeField]private bool waveActive = true;
+    [SerializeField] private bool waveActive = true;
+
+    [SerializeField] private int bossEnemyAmount = 0;
+    [SerializeField] private int enemiesspawned;
+    public int BossEnemyAmount => bossEnemyAmount;
+
+    private void Start()
+    {
+        EnemySpawner.OnEnemySpawn += HandleEnemySpawn;
+    }
 
     private void Update()
     {
-        int currentEnemies = GameObject.FindGameObjectsWithTag(enemyTag).Length;
-
-        if (currentEnemies >= enemiesToKillThisWave)
+        if (enemiesspawned >= enemiesToKillThisWave)
         {
             MaxEnemySpawn();
         }
-            
 
         if (waveActive && enemiesKilled >= enemiesToKillThisWave)
             EndWave();
+    }
+
+    private void HandleEnemySpawn()
+    {
+        enemiesspawned++;
+        Debug.Log($"[WaveChecker] Enemy spawned. {enemiesspawned}/{enemiesToKillThisWave}");
     }
 
     private void MaxEnemySpawn()
@@ -59,21 +72,40 @@ public class WaveChecker : MonoBehaviour
     {
         waveNumber++;
         enemiesKilled = 0;
+        enemiesspawned = 0; // reset for next wave
         enemiesToKillThisWave += 5;
         waveActive = true;
+
         Debug.Log($"[WaveChecker] Wave {waveNumber} started. Kill {enemiesToKillThisWave} enemies.");
+
+        if (waveNumber % 10 == 0)
+        {
+            Debug.Log("[WaveChecker] Boss Wave Reached!");
+            waveActive = false; // stop normal spawning
+            bossEnemyAmount++;
+            OnBossWave?.Invoke();
+        }
     }
 
     private void OnEnable()
     {
         Enemy.OnEnemyKilled += EnemyKilled;
-        Enemy.OnEnemyReachedEnd += EnemyReachedEnd; 
+        Enemy.OnEnemyReachedEnd += EnemyReachedEnd;
+        BossEnemy.OnBossDefeated += HandleBossDefeat;
     }
 
     private void OnDisable()
     {
         Enemy.OnEnemyKilled -= EnemyKilled;
         Enemy.OnEnemyReachedEnd -= EnemyReachedEnd;
+        BossEnemy.OnBossDefeated -= HandleBossDefeat;
+        EnemySpawner.OnEnemySpawn -= HandleEnemySpawn;
+    }
+
+    private void HandleBossDefeat()
+    {
+        Debug.Log("[WaveChecker] Boss defeated! Starting next wave...");
+        Invoke(nameof(StartNextWave), 5f);
     }
 
     // Public Getters

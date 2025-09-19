@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 
@@ -17,6 +18,8 @@ public class Pathing : MonoBehaviour
 
     [SerializeField] private Transform[] patrolPoints;
     private int currentTargetIndex = 0;
+
+    public float Speed => speed;
 
     private void Start()
     {

@@ -4,34 +4,42 @@ using System;
 [RequireComponent(typeof(Pathing))]
 public class Enemy : MonoBehaviour
 {
-    // Events for WaveChecker
+    // Enemy events
     public static event Action OnEnemyKilled;
     public static event Action OnEnemyReachedEnd;
+
+    //Boss events
+    public static event Action OnBossDefeated;
 
     [Header("Stats")]
     [SerializeField] private float maxHealth = 10f;
     [SerializeField] private int damage = 1;
     [SerializeField] private int reward = 5;
-    [SerializeField] private float speed = 1f;
+    [SerializeField] private float speed;
 
     private float currentHealth;
     private Pathing pathing;
     private CurrencyManager currencyManager;
 
+    private bool isBoss;
+
     private void Awake()
     {
         currentHealth = maxHealth;
         pathing = GetComponent<Pathing>();
+
+        isBoss = CompareTag("Boss");
     }
 
     private void Start()
     {
-        // Try to find CurrencyManager in scene
+        // Currency manager
         GameObject obj = GameObject.FindGameObjectWithTag("Currency manager");
         if (obj != null)
             currencyManager = obj.GetComponent<CurrencyManager>();
         else
             Debug.LogWarning("[Enemy] No CurrencyManager found in scene!");
+        speed = pathing.Speed;
     }
 
     private void OnEnable()
@@ -66,22 +74,41 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        // Add currency if manager is assigned
         if (currencyManager != null)
             currencyManager.AddCurrency(reward);
         else
             Debug.LogWarning("[Enemy] CurrencyManager not assigned!");
 
-        Debug.Log($"[Enemy] {name} died, invoking OnEnemyKilled");
-        OnEnemyKilled?.Invoke();
+        Debug.Log($"[Enemy] {name} died.");
+
+        if (isBoss)
+        {
+            Debug.Log("[Enemy] Boss defeated, invoking OnBossDefeated!");
+            OnBossDefeated?.Invoke();
+        }
+        else
+        {
+            Debug.Log("[Enemy] Normal enemy killed, invoking OnEnemyKilled!");
+            OnEnemyKilled?.Invoke();
+        }
 
         Destroy(gameObject);
     }
 
     private void HandleReachedEnd()
     {
-        Debug.Log($"[Enemy] {name} reached end, invoking OnEnemyReachedEnd");
-        OnEnemyReachedEnd?.Invoke();
+        Debug.Log($"[Enemy] {name} reached end.");
+
+        if (isBoss)
+        {
+            Debug.Log("[Enemy] Boss reached end, treating as defeat!");
+            OnBossDefeated?.Invoke(); 
+        }
+        else
+        {
+            OnEnemyReachedEnd?.Invoke();
+        }
+
         Destroy(gameObject);
     }
 }

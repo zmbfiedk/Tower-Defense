@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 558817430184602585}
   - component: {fileID: -2063162681682027371}
   m_Layer: 0
-  m_Name: Hexagon Flat-Top 2
+  m_Name: Burst
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,7 +160,7 @@ MonoBehaviour:
   rotationSpeed: 50
   attackRange: 10
   fireRate: 2
-  projectilePrefab: {fileID: 6815579030488834856, guid: 428512f50db5b274792747bc9f903bfd, type: 3}
+  projectilePrefab: {fileID: 6815579030488834856, guid: 0224fa52997e4c8438dfeca256d1325f, type: 3}
   towerType: 2
 --- !u!50 &-2063162681682027371
 Rigidbody2D:

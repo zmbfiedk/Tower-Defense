@@ -11,7 +11,7 @@ public class RotatingTower : MonoBehaviour
     private Transform spot;
     private float fireCooldown = 0f;
     private bool isPlaced = false;
-    private float angle = 0f; // current orbit angle in degrees
+    private float angle = 0f; 
 
     public enum TowerType { SingleShot, TripleShot, Burst, LaserBurst }
     [Header("Tower Type Settings")]
@@ -26,7 +26,6 @@ public class RotatingTower : MonoBehaviour
                 spot = transform.parent;
                 isPlaced = true;
 
-                // Start directly above the spot
                 transform.position = spot.position + new Vector3(0f, attackRange, 0f);
                 angle = 90f; 
             }
@@ -36,8 +35,8 @@ public class RotatingTower : MonoBehaviour
             }
         }
 
-        // Orbit logic without changing tower rotation
-        angle += rotationSpeed * Time.deltaTime; // increase orbit angle
+        // Orbit
+        angle += rotationSpeed * Time.deltaTime;
         if (angle >= 360f) angle -= 360f;
 
         float rad = angle * Mathf.Deg2Rad;
@@ -76,7 +75,6 @@ public class RotatingTower : MonoBehaviour
         }
     }
 
-    // --- Shooting Types ---
     private void ShootSingle()
     {
         FireProjectileAtEnemy();
@@ -84,7 +82,6 @@ public class RotatingTower : MonoBehaviour
 
     private void ShootTriple()
     {
-        // Try to fire at one enemy, but with spread
         Collider2D target = FindEnemyInRange();
         if (target != null)
         {
@@ -108,7 +105,6 @@ public class RotatingTower : MonoBehaviour
         }
     }
 
-    // --- Helper Methods ---
     private void FireProjectileAtEnemy()
     {
         Collider2D target = FindEnemyInRange();
@@ -125,7 +121,7 @@ public class RotatingTower : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(spot.position, attackRange);
         foreach (var hit in hits)
         {
-            if (hit.CompareTag("Enemy"))
+            if (hit.CompareTag("Enemy") || hit.CompareTag("Boss"))
             {
                 return hit;
             }

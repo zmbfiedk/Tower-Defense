@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8400844561282612695}
   - component: {fileID: 389064168780305811}
   m_Layer: 0
-  m_Name: Enemy 3
+  m_Name: Fast
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,8 @@ MonoBehaviour:
   spawnPointTag: SpawnPoint
   patrolPointTag: Point
   endPointTag: EndPoint
-  speed: 1
+  speed: 2
+  patrolPoints: []
 --- !u!58 &8400844561282612695
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -150,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db70b3684754a841b4ce73b1a2713b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 5
   damage: 1
   reward: 25
   speed: 1

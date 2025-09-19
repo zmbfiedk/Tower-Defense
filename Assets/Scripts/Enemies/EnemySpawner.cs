@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Enemy Prefabs")]
     [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private GameObject[] bossPrefabs;
 
     private float timeTillSpawn;
     private bool canSpawn = true;
@@ -32,8 +33,21 @@ public class EnemySpawner : MonoBehaviour
             WaveChecker.OnMaxEnemySpawn += StopSpawning;
             WaveChecker.OnWaveOver += StopSpawning;
             WaveChecker.OnWaveOver += () => Invoke(nameof(AllowSpawning), 9f);
+
+            WaveChecker.OnBossWave += () =>
+            {
+                StopSpawning(); 
+                SpawnBoss();
+            };
+
+            BossEnemy.OnBossDefeated += () =>
+            {
+                Debug.Log("[EnemySpawner] Boss defeated, resuming normal spawns.");
+                AllowSpawning();
+            };
         }
     }
+
 
     private void Update()
     {
@@ -49,6 +63,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+
     private void ResetSpawnTimer()
     {
         timeTillSpawn = UnityEngine.Random.Range(minSpawnTime, maxSpawnTime);
@@ -59,6 +74,16 @@ public class EnemySpawner : MonoBehaviour
         if (enemyPrefabs.Length == 0) return;
 
         GameObject prefab = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)];
+        Instantiate(prefab, transform.position, Quaternion.identity);
+
+        OnEnemySpawn?.Invoke();
+    }
+
+    private void SpawnBoss()
+    {
+        if (bossPrefabs.Length == 0) return;
+
+        GameObject prefab = bossPrefabs[UnityEngine.Random.Range(0, bossPrefabs.Length)];
         Instantiate(prefab, transform.position, Quaternion.identity);
 
         OnEnemySpawn?.Invoke();
