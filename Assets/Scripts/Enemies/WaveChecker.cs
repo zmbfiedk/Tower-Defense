@@ -19,10 +19,18 @@ public class WaveChecker : MonoBehaviour
         int currentEnemies = GameObject.FindGameObjectsWithTag(enemyTag).Length;
 
         if (currentEnemies >= enemiesToKillThisWave)
-            OnMaxEnemySpawn?.Invoke();
+        {
+            MaxEnemySpawn();
+        }
+            
 
         if (waveActive && enemiesKilled >= enemiesToKillThisWave)
             EndWave();
+    }
+
+    private void MaxEnemySpawn()
+    {
+        OnMaxEnemySpawn?.Invoke();
     }
 
     public void EnemyKilled()

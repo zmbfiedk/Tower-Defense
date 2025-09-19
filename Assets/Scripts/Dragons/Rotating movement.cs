@@ -28,7 +28,7 @@ public class RotatingTower : MonoBehaviour
 
                 // Start directly above the spot
                 transform.position = spot.position + new Vector3(0f, attackRange, 0f);
-                angle = 90f; // corresponds to above the spot
+                angle = 90f; 
             }
             else
             {
