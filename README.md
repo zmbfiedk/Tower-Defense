@@ -1,12 +1,12 @@
 # Sprint 0 - Game Design Document : Tower Defense  
 **Naam:** Arthur  
-**Klas:** GD1B 
+**Klas:** GD1B  
 **Datum:** 08/09/2025  
 
 ---
 
 ## 1. Titel en elevator pitch  
-**Titel:** Dragon defense
+**Titel:** Dragon Defense  
 
 **Elevator pitch (maximaal twee zinnen):**  
 My game is a tower defense where the player can build different types of towers. Every 10 waves the towers must be swapped, forcing the player to adapt and adding variety and strategy to the gameplay.  
@@ -26,38 +26,40 @@ Hier voeg je schetsen of mockups in van je level, UI en HUD.
 ---
 
 ## 4. Torens  
+📌 *Alle waarden zijn startwaarden en kunnen later gebalanceerd worden via playtesting.*  
+
 **Basis torens:**  
-- **Fast Tower** – Low damage, very high fire rate.  
-- **Slow Tower** – High damage, slow fire rate.  
-- **Long Range Tower** – Attacks from far away, but weaker shots.  
-- **Short Range Tower** – Strong damage but limited range.  
-- **Freeze Tower** – Slows enemies temporarily.  
-- **Flame Tower** – Damage over time effect.  
+- **Fast Tower** – Damage: **5**, Fire rate: **0.3s/shot**, Range: **4 units**, Cost: **80**, Upgrade cost: **+50** per level.  
+- **Slow Tower** – Damage: **25**, Fire rate: **2s/shot**, Range: **5 units**, Cost: **120**, Upgrade cost: **+70** per level.  
+- **Long Range Tower** – Damage: **10**, Fire rate: **1s/shot**, Range: **8 units**, Cost: **100**, Upgrade cost: **+60** per level.  
+- **Short Range Tower** – Damage: **40**, Fire rate: **1.5s/shot**, Range: **2.5 units**, Cost: **150**, Upgrade cost: **+75** per level.  
+- **Freeze Tower** – Damage: **0**, Effect: slows enemy speed by **40%** for **2s**, Range: **5 units**, Fire rate: **1s**, Cost: **130**, Upgrade cost: **+65** per level.  
+- **Flame Tower** – Damage: **3 DPS for 4s** (DoT effect), Initial hit: **5**, Range: **4 units**, Fire rate: **1s**, Cost: **140**, Upgrade cost: **+70** per level.  
 
 **Eventuele extra torens:**  
-- To be determined (ideas can be added later).  
-
-📌 Alle eigenschappen zijn uitgewerkt in Trello.  
+- TBD (can be added later).  
 
 ---
 
 ## 5. Vijanden  
 **Basis vijanden:**  
-- **Normal** – Balanced stats.  
-- **Fast** – Weak but very quick.  
-- **Heavy** – Slow, tanky, resistant to some effects.  
-- **Support** – Heals other enemies.  
-- **Invisible** – Hard to detect, requires special towers to reveal.  
+- **Normal** – HP: **100**, Speed: **2 units/sec**, Reward: **10**.  
+- **Fast** – HP: **50**, Speed: **4 units/sec**, Reward: **8**.  
+- **Heavy** – HP: **300**, Speed: **1.2 units/sec**, Reward: **20**, Slow resistance: **50%**.  
+- **Support** – HP: **120**, Speed: **2 units/sec**, Reward: **15**, Heals nearby enemies: **10 HP every 3s**.  
+- **Invisible** – HP: **90**, Speed: **2.5 units/sec**, Reward: **12**, Requires reveal tower.  
 
-📌 Alle eigenschappen zijn uitgewerkt in Trello.  
+**Boss enemy (every 10 waves):**  
+- HP: **2000**, Speed: **1.5 units/sec**, Reward: **100**, Special: immune to Freeze for **5s** after first slow.  
 
 ---
 
 ## 6. Gameplay loop  
+- Player starts with **200 gold** and **20 lives**.  
 - Player builds towers.  
 - Enemies spawn in waves.  
 - Towers attack enemies automatically.  
-- Player earns currency from defeated enemies.  
+- Player earns **gold rewards** for kills.  
 - Currency is used to place/upgrade towers.  
 - Every 10 waves: **mandatory tower swap** (player chooses new loadout).  
 - Survive as long as possible.  
@@ -67,10 +69,10 @@ Hier voeg je schetsen of mockups in van je level, UI en HUD.
 ---
 
 ## 7. Progressie  
-- Each wave spawns more enemies.  
-- Enemies gradually become stronger, faster, and sometimes gain resistances.  
-- Boss-like enemies appear at wave milestones (10, 20, 30...).  
-- Forced tower swaps push the player to adapt new strategies.  
+- Each wave adds **+10% enemy HP** and **+5% speed** compared to previous.  
+- Rewards scale at **+10% per wave**.  
+- Boss appears at wave milestones (10, 20, 30...).  
+- Tower swap forces players to **rethink loadouts every 10 waves**.  
 
 ---
 
@@ -82,57 +84,53 @@ Hier voeg je schetsen of mockups in van je level, UI en HUD.
 
 - **Probleem 2:** Forced tower swaps may frustrate players.  
   - **Impact:** Players feel they have no control.  
-  - **Oplossing:** Give a choice of 2–3 towers each swap so they feel agency.  
+  - **Oplossing:** Give a choice of **2–3 towers** each swap so they feel agency.  
 
 - **Probleem 3:** Invisible enemies could be unfair.  
   - **Impact:** Players might feel punished without warning.  
   - **Oplossing:** Introduce tutorials/hints before invisible enemies appear.  
 
-  
 ---
 
 ## 9. Planning per sprint en mechanics (Trello-sync)
 
-> Copy this into your README. Each item is a GitHub checkbox you can tick off.
-
 ### Sprint 1 — Core loop online
-- [ ] Pathing system (waypoints)
-- [ ] WaveManager (start/stop waves, per-enemy delay)
-- [ ] Placeable spots (grid/slots)
-- [ ] Basic Tower (shoot timer, range check)
-- [ ] **Projectile system** (move → hit → apply damage)
-- [ ] **Collision & damage** (projectile ↔ enemy)
-- [ ] **UI basic** (money + lives display)
+- [ ] Pathing system (waypoints: **5–8 per map**)  
+- [ ] WaveManager (interval: **1s between spawns**)  
+- [ ] Placeable spots (grid: **5x5**, ~25 spots)  
+- [ ] Basic Tower (range: **3 units**, fire rate: **1s**)  
+- [ ] Projectile system (speed: **6 units/sec**)  
+- [ ] Collision & damage (apply **10 damage**)  
+- [ ] UI basic (money + lives)  
 
 ### Sprint 2 — First playable
-- [ ] Normal enemy (baseline stats)
-- [ ] Spotting/targeting system (closest/first-in-path)
-- [ ] HP system (enemy health bars optional)
-- [ ] **Enemy death & reward** (money on kill)
-- [ ] **Goal/life loss** (despawn on goal, -1 life)
-- [ ] **Build/sell flow** (place, cancel, sell refund)
+- [ ] Normal enemy (HP: **100**, Speed: **2**)  
+- [ ] Targeting system (closest/first-in-path toggle)  
+- [ ] HP system (enemy health bar above enemy)  
+- [ ] Enemy death & reward (**+10 gold**)  
+- [ ] Goal/life loss (**-1 life per escaped enemy**)  
+- [ ] Build/sell flow (refund: **70% of cost**)  
 
 ### Sprint 3 — Variety & economy
-- [ ] Economy system (costs, income, balance vars)
-- [ ] Light enemy (fast/low HP)
-- [ ] Heavy enemy (slow/high HP, maybe slow-resist)
-- [ ] Invisible enemy (requires reveal)
-- [ ] Support enemy (buff/heal nearby)
-- [ ] Low-range tower (high DPS, short range)
-- [ ] **Tower upgrades** (range/damage/attack speed)
+- [ ] Economy system (starting gold: **200**, wave income: **+50 per wave**)  
+- [ ] Light enemy (HP: **50**, Speed: **4**, Reward: **20**)  
+- [ ] Heavy enemy (HP: **300**, Speed: **1.2**, Reward: **2250**)  
+- [ ] Invisible enemy (HP: **90**, Speed: **2.5**, Reward: **12**)  
+- [ ] Support enemy (HP: **120**, heal: **10 HP every 3s**)  
+- [ ] Low-range tower (damage: **40**, range: **2.5**)  
+- [ ] Tower upgrades (+20% stats per level)  
 
 ### Sprint 4 — Unique feature & depth
-- [ ] **Tower swap mechanic** (mandatory swap every 10 waves)
-- [ ] Freeze tower (slow effect, durations/stacks)
-- [ ] Flame tower (DoT over time)
-- [ ] **Reveal mechanic** (counter to Invisible)
-- [ ] **UI upgrade menu** (inspect/upgrade/sell)
-- [ ] **Enemy resistances** (slow/DoT/armor flags)
+- [ ] Tower swap mechanic (mandatory swap every **10 waves**)  
+- [ ] Freeze tower (slow: **40% for 2s**)  
+- [ ] Flame tower (DoT: **3 DPS for 4s**)  
+- [ ] Reveal mechanic (range: **5 units**, cost: **100**)  
+- [ ] UI upgrade menu (upgrade cost scaling: **+50% each level**)  
+- [ ] Enemy resistances (Heavy: **slow resist 50%**, Boss: **temporary immunity**)  
 
 ### Sprint 5 — Boss & polish
-- [ ] Boss enemy (wave milestone, phases or abilities)
-- [ ] Sound effects (shoot,Music)
-
+- [ ] Boss enemy (HP: **2000**, reward: **100**)  
+- [ ] Sound effects (shoot, music, hits)  
 
 ---
 
@@ -175,6 +173,7 @@ Wat ik vermijd: te veel grind of repetitieve strategieën — mijn unieke featur
 - **Oplossing:** UI bouwen met canvas en anchors zodat het schaalt op verschillende schermen.  
 - **Acceptatie:** Speler ziet altijd zijn geld, levens en huidige wave duidelijk in beeld.  
 
+---
 
-### 12???
-[Trello](https://trello.com/invite/b/68be86f11b0fd1599436af44/ATTI4fae26223c69d7fe3d588c43749edded7E21C96A/towerdefense)
+## 12. Trello  
+[Trello Board](https://trello.com/invite/b/68be86f11b0fd1599436af44/ATTI4fae26223c69d7fe3d588c43749edded7E21C96A/towerdefense)  
