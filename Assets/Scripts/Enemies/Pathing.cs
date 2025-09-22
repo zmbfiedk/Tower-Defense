@@ -15,6 +15,7 @@ public class Pathing : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float speed = 1f;
+    [SerializeField] private int damage = 15;
 
     [SerializeField] private Transform[] patrolPoints;
     private int currentTargetIndex = 0;
@@ -59,8 +60,10 @@ public class Pathing : MonoBehaviour
             // Enemy reached the end
             if (currentTargetIndex >= patrolPoints.Length)
             {
+                PlayerHealth.instance.TakeDamage(damage);
                 OnReachedEnd?.Invoke();
                 Destroy(gameObject); 
+                
             }
         }
     }

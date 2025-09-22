@@ -66,6 +66,8 @@ public class WaveChecker : MonoBehaviour
         Debug.Log($"[WaveChecker] Wave {waveNumber} ended.");
         OnWaveOver?.Invoke();
         Invoke(nameof(StartNextWave), 5f);
+        enemiesToKillThisWave++;
+        CurrencyManager.Instance.AddCurrency(waveNumber * 10); 
     }
 
     private void StartNextWave()
@@ -73,7 +75,7 @@ public class WaveChecker : MonoBehaviour
         waveNumber++;
         enemiesKilled = 0;
         enemiesspawned = 0; // reset for next wave
-        enemiesToKillThisWave += 5;
+        enemiesToKillThisWave+= 5;
         waveActive = true;
 
         Debug.Log($"[WaveChecker] Wave {waveNumber} started. Kill {enemiesToKillThisWave} enemies.");

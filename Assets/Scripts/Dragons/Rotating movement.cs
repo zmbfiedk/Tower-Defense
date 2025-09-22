@@ -91,7 +91,7 @@ public class RotatingTower : MonoBehaviour
                 float spreadAngle = i * 15f; // -15, 0, +15
                 Quaternion rot = Quaternion.Euler(0, 0, spreadAngle) * Quaternion.FromToRotation(Vector3.right, dir);
                 GameObject proj = Instantiate(projectilePrefab, transform.position, rot);
-                proj.GetComponent<Rigidbody2D>().velocity = rot * Vector3.right * 10f;
+                proj.GetComponent<Rigidbody2D>().velocity = rot * Vector3.right * 30f;
             }
         }
     }
@@ -112,7 +112,7 @@ public class RotatingTower : MonoBehaviour
         {
             Vector3 dir = (target.transform.position - transform.position).normalized;
             GameObject proj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-            proj.GetComponent<Rigidbody2D>().velocity = dir * 10f;
+            proj.GetComponent<Rigidbody2D>().velocity = dir * 30f;
         }
     }
 
