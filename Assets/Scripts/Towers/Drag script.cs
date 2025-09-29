@@ -9,6 +9,11 @@ public class Dragscript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     [SerializeField] private string towerPlacementTag = "TowerPlacement";
     [SerializeField] private int towerCost = 50;
 
+    public int cost
+    {
+        get { return towerCost; }
+    }
+
     private GameObject towerClone;
 
     // -------------------------
