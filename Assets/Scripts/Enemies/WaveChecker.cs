@@ -91,16 +91,16 @@ public class WaveChecker : MonoBehaviour
 
     private void OnEnable()
     {
-        Enemy.OnEnemyKilled += EnemyKilled;
-        Enemy.OnEnemyReachedEnd += EnemyReachedEnd;
-        BossEnemy.OnBossDefeated += HandleBossDefeat;
+        EnemyEvents.OnEnemyKilled += EnemyKilled;
+        EnemyEvents.OnEnemyReachedEnd += EnemyReachedEnd;
+        EnemyEvents.OnBossDefeated += HandleBossDefeat;
     }
 
     private void OnDisable()
     {
-        Enemy.OnEnemyKilled -= EnemyKilled;
-        Enemy.OnEnemyReachedEnd -= EnemyReachedEnd;
-        BossEnemy.OnBossDefeated -= HandleBossDefeat;
+        EnemyEvents.OnEnemyKilled -= EnemyKilled;
+        EnemyEvents.OnEnemyReachedEnd -= EnemyReachedEnd;
+        EnemyEvents.OnBossDefeated -= HandleBossDefeat;
         EnemySpawner.OnEnemySpawn -= HandleEnemySpawn;
     }
 

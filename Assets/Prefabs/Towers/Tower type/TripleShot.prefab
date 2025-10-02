@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6458030801031576985}
   - component: {fileID: 558817430184602585}
   - component: {fileID: -2063162681682027371}
+  - component: {fileID: 6202119324721408997}
   m_Layer: 0
   m_Name: TripleShot
   m_TagString: Tower
@@ -145,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe35db8bcb95f4c448cb78bae3d08a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerPrice: 50
 --- !u!114 &558817430184602585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,10 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 50
-  attackRange: 4
-  fireRate: 5
-  projectilePrefab: {fileID: 6815579030488834856, guid: 54bcf9b30227b954aa42a62a193d70e2, type: 3}
-  towerType: 1
+  orbitRadius: 9
 --- !u!50 &-2063162681682027371
 Rigidbody2D:
   serializedVersion: 4
@@ -189,3 +188,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6202119324721408997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413341225741239609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823fdb963e68bb9468c925452bc3ae4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 1
+  projectilePrefab: {fileID: 0}
+  towerType: 0

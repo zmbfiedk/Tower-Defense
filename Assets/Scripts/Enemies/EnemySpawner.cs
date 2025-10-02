@@ -36,18 +36,17 @@ public class EnemySpawner : MonoBehaviour
 
             WaveChecker.OnBossWave += () =>
             {
-                StopSpawning(); 
+                StopSpawning();
                 SpawnBoss();
             };
 
-            BossEnemy.OnBossDefeated += () =>
+            EnemyEvents.OnBossDefeated += () =>
             {
                 Debug.Log("[EnemySpawner] Boss defeated, resuming normal spawns.");
                 AllowSpawning();
             };
         }
     }
-
 
     private void Update()
     {
@@ -63,7 +62,6 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-
     private void ResetSpawnTimer()
     {
         timeTillSpawn = UnityEngine.Random.Range(minSpawnTime, maxSpawnTime);
@@ -74,7 +72,16 @@ public class EnemySpawner : MonoBehaviour
         if (enemyPrefabs.Length == 0) return;
 
         GameObject prefab = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)];
-        Instantiate(prefab, transform.position, Quaternion.identity);
+        GameObject enemyObj = Instantiate(prefab, transform.position, Quaternion.identity);
+
+        // --- Initialize path ---
+        PathBuilder pathBuilder = FindObjectOfType<PathBuilder>();
+        if (pathBuilder != null)
+        {
+            EnemyPath pathComp = enemyObj.GetComponent<EnemyPath>();
+            if (pathComp != null)
+                pathComp.Initialize(pathBuilder.BuildPath());
+        }
 
         OnEnemySpawn?.Invoke();
     }
@@ -84,7 +91,14 @@ public class EnemySpawner : MonoBehaviour
         if (bossPrefabs.Length == 0) return;
 
         GameObject prefab = bossPrefabs[UnityEngine.Random.Range(0, bossPrefabs.Length)];
-        Instantiate(prefab, transform.position, Quaternion.identity);
+        GameObject enemyObj = Instantiate(prefab, transform.position, Quaternion.identity);
+        PathBuilder pathBuilder = FindObjectOfType<PathBuilder>();
+        if (pathBuilder != null)
+        {
+            EnemyPath pathComp = enemyObj.GetComponent<EnemyPath>();
+            if (pathComp != null)
+                pathComp.Initialize(pathBuilder.BuildPath());
+        }
 
         OnEnemySpawn?.Invoke();
     }

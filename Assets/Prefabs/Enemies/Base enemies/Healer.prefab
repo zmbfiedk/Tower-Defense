@@ -10,10 +10,15 @@ GameObject:
   m_Component:
   - component: {fileID: 2209377863391299575}
   - component: {fileID: 151271185737410364}
-  - component: {fileID: 6780008606059215533}
   - component: {fileID: 8400844561282612695}
-  - component: {fileID: 389064168780305811}
-  - component: {fileID: 3418223466003686749}
+  - component: {fileID: 4971653272257354663}
+  - component: {fileID: -9147818776837794343}
+  - component: {fileID: -1569470253702769192}
+  - component: {fileID: 4857311857988483063}
+  - component: {fileID: 5174131733554649430}
+  - component: {fileID: -1500401214807899898}
+  - component: {fileID: -345984416857975271}
+  - component: {fileID: 4558963586969870072}
   m_Layer: 0
   m_Name: Healer
   m_TagString: Enemy
@@ -88,23 +93,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6780008606059215533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4190395355569365779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21ac7c9c03e81d947a7e66968005e78c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPointTag: SpawnPoint
-  patrolPointTag: Point
-  endPointTag: EndPoint
-  speed: 1
-  patrolPoints: []
 --- !u!58 &8400844561282612695
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -140,7 +128,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &389064168780305811
+--- !u!114 &4971653272257354663
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,15 +137,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 4190395355569365779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1db70b3684754a841b4ce73b1a2713b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 5041e17e1304ab644a8a88c2134176db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBoss: 0
+--- !u!114 &-9147818776837794343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2258a28f464c7fb41a9e4992c2367bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
-  damage: 1
-  reward: 25
-  speed: 1
-  currentHealth: 0
---- !u!114 &3418223466003686749
+--- !u!114 &-1569470253702769192
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,9 +163,76 @@ MonoBehaviour:
   m_GameObject: {fileID: 4190395355569365779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116604bfc3049124eb7f2f81a8704d22, type: 3}
+  m_Script: {fileID: 11500000, guid: 450cfdf6a56d4054a8423ac698b72c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+--- !u!114 &4857311857988483063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9b55259ccd34b439254ae8b2740660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reward: 5
+--- !u!114 &5174131733554649430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24964ab8fbf9c5c4ba00f57fb47da2c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPointTag: SpawnPoint
+  patrolPointTag: Point
+  endPointTag: EndPoint
+--- !u!114 &-1500401214807899898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7b3726fdb699e04fad4d2df740f2272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 15
+--- !u!114 &-345984416857975271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2625f0e4e480d8e4fab24b9184d020ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healRange: 5
+--- !u!114 &4558963586969870072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf4a1f4c36e1fb479b4d4b6a0e90b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   healAmount: 0.1
   healInterval: 0.2
+  healArea: {fileID: -345984416857975271}

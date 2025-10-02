@@ -10,9 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2209377863391299575}
   - component: {fileID: 151271185737410364}
-  - component: {fileID: 6780008606059215533}
   - component: {fileID: 8400844561282612695}
-  - component: {fileID: 389064168780305811}
+  - component: {fileID: 7743287700417872936}
+  - component: {fileID: -4533559417264152724}
+  - component: {fileID: -7777562092411813649}
+  - component: {fileID: -6511511690879037611}
+  - component: {fileID: -8028377790359984536}
+  - component: {fileID: -8377862452529581806}
   m_Layer: 0
   m_Name: Heavy
   m_TagString: Enemy
@@ -87,23 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6780008606059215533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4190395355569365779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21ac7c9c03e81d947a7e66968005e78c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPointTag: SpawnPoint
-  patrolPointTag: Point
-  endPointTag: EndPoint
-  speed: 0.5
-  patrolPoints: []
 --- !u!58 &8400844561282612695
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -139,7 +126,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &389064168780305811
+--- !u!114 &7743287700417872936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,10 +135,74 @@ MonoBehaviour:
   m_GameObject: {fileID: 4190395355569365779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1db70b3684754a841b4ce73b1a2713b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 5041e17e1304ab644a8a88c2134176db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
-  damage: 1
-  reward: 25
+  isBoss: 0
+--- !u!114 &-4533559417264152724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2258a28f464c7fb41a9e4992c2367bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+--- !u!114 &-7777562092411813649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450cfdf6a56d4054a8423ac698b72c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   speed: 1
+--- !u!114 &-6511511690879037611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9b55259ccd34b439254ae8b2740660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reward: 5
+--- !u!114 &-8028377790359984536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24964ab8fbf9c5c4ba00f57fb47da2c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPointTag: SpawnPoint
+  patrolPointTag: Point
+  endPointTag: EndPoint
+--- !u!114 &-8377862452529581806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7b3726fdb699e04fad4d2df740f2272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 15

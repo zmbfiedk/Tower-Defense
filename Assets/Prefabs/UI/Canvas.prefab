@@ -306,7 +306,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 200}
+  m_AnchoredPosition: {x: -200, y: 278.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2483646619648463145
@@ -417,7 +417,8 @@ GameObject:
   - component: {fileID: 8758487395010603034}
   - component: {fileID: 5238092127902154413}
   - component: {fileID: 3664071018221952084}
-  - component: {fileID: 5987059040498091872}
+  - component: {fileID: 4133921610916427735}
+  - component: {fileID: 2692563938346589124}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -442,7 +443,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 700, y: -200}
+  m_AnchoredPosition: {x: 700, y: -290.1}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5238092127902154413
@@ -483,7 +484,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5987059040498091872
+--- !u!114 &4133921610916427735
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -492,13 +493,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 647314384309968709}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: befb9f58a90f2e742b93812d6258225a, type: 3}
+  m_Script: {fileID: 11500000, guid: a955cafe6a15fe9408ecd779626a09e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPlacementTag: TowerPlacement
+  snapDistance: 1
+  towerCost: 100
+--- !u!114 &2692563938346589124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647314384309968709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f041cb7f02162549858996621e4ef0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: 3413341225741239609, guid: f676c6c285b644f4db1e3d1ade517fed, type: 3}
-  snapDistance: 1
-  towerPlacementTag: TowerPlacement
-  towerCost: 100
 --- !u!1 &2441013558326474344
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +523,8 @@ GameObject:
   - component: {fileID: 8907260589559869506}
   - component: {fileID: 7064546817430347961}
   - component: {fileID: 4368219621455126571}
-  - component: {fileID: 2701148249057647803}
+  - component: {fileID: 5924246558627493965}
+  - component: {fileID: 1083739905335719349}
   m_Layer: 5
   m_Name: Image (2)
   m_TagString: Untagged
@@ -535,7 +549,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: -200}
+  m_AnchoredPosition: {x: -150, y: -290.1}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7064546817430347961
@@ -576,7 +590,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2701148249057647803
+--- !u!114 &5924246558627493965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -585,13 +599,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2441013558326474344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: befb9f58a90f2e742b93812d6258225a, type: 3}
+  m_Script: {fileID: 11500000, guid: a955cafe6a15fe9408ecd779626a09e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPlacementTag: TowerPlacement
+  snapDistance: 1
+  towerCost: 200
+--- !u!114 &1083739905335719349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2441013558326474344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f041cb7f02162549858996621e4ef0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: 3413341225741239609, guid: 00586f7303e1f224c80a8bec45c4dff2, type: 3}
-  snapDistance: 1
-  towerPlacementTag: TowerPlacement
-  towerCost: 200
 --- !u!1 &3681699969029508860
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,7 +766,8 @@ GameObject:
   - component: {fileID: 7321770431410542453}
   - component: {fileID: 5383751363169604328}
   - component: {fileID: 3214452905294379451}
-  - component: {fileID: 1363092397484148087}
+  - component: {fileID: 243182647604649093}
+  - component: {fileID: 2395907177502411638}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -765,7 +792,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -700, y: -200}
+  m_AnchoredPosition: {x: -700, y: -290.1}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5383751363169604328
@@ -806,7 +833,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1363092397484148087
+--- !u!114 &243182647604649093
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -815,13 +842,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 4703453264455331108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: befb9f58a90f2e742b93812d6258225a, type: 3}
+  m_Script: {fileID: 11500000, guid: a955cafe6a15fe9408ecd779626a09e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPlacementTag: TowerPlacement
+  snapDistance: 1
+  towerCost: 50
+--- !u!114 &2395907177502411638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4703453264455331108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f041cb7f02162549858996621e4ef0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: 4719798817163162122, guid: b74a57466545e274898ecfabf278de2f, type: 3}
-  snapDistance: 1
-  towerPlacementTag: TowerPlacement
-  towerCost: 50
 --- !u!1 &5140375447707848931
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +872,8 @@ GameObject:
   - component: {fileID: 6566906599610868700}
   - component: {fileID: 1376923460993059103}
   - component: {fileID: 7366004941962553071}
-  - component: {fileID: 477883479187948996}
+  - component: {fileID: 1486271198059905995}
+  - component: {fileID: 8832602966241293300}
   m_Layer: 5
   m_Name: Image (1)
   m_TagString: Untagged
@@ -858,7 +898,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: -200}
+  m_AnchoredPosition: {x: 300, y: -290.1}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1376923460993059103
@@ -899,7 +939,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &477883479187948996
+--- !u!114 &1486271198059905995
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -908,13 +948,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 5140375447707848931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: befb9f58a90f2e742b93812d6258225a, type: 3}
+  m_Script: {fileID: 11500000, guid: a955cafe6a15fe9408ecd779626a09e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPlacementTag: TowerPlacement
+  snapDistance: 1
+  towerCost: 150
+--- !u!114 &8832602966241293300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140375447707848931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f041cb7f02162549858996621e4ef0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: 3413341225741239609, guid: 56fe2cc1384ebb241ac220430a124d62, type: 3}
-  snapDistance: 1
-  towerPlacementTag: TowerPlacement
-  towerCost: 150
 --- !u!1 &5571869295743497114
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +1001,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -419.53, y: 201.02}
+  m_AnchoredPosition: {x: -419.53, y: 278.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2662325852258497254

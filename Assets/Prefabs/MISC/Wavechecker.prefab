@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5466845490866210641}
-  - component: {fileID: 5174916887008352471}
+  - component: {fileID: 9108299943025955845}
   m_Layer: 0
   m_Name: Wavechecker
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5174916887008352471
+--- !u!114 &9108299943025955845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTag: Enemy
-  maxEnemyAmount: 1
-  waveNumber: 0
-  enemiesKilledThisWave: 0
   enemiesToKillThisWave: 1
+  waveNumber: 0
+  enemiesKilled: 0
+  waveActive: 1
+  bossEnemyAmount: 0
+  enemiesspawned: 0

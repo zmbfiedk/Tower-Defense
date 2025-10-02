@@ -1,34 +1,36 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class Tower : MonoBehaviour
+public class SellTower : MonoBehaviour
 {
     private TowerSpot spot;
     private float lastClickTime;
     private const float doubleClickDelay = 0.3f;
-    Dragscript Dragscript => FindObjectOfType<Dragscript>();
-    public void SetSpot(TowerSpot s) => spot = s;
-    private int towerPrice;
+    [SerializeField] private int towerPrice = 50; // default if not set
 
-    private void Start()
+    public void SetSpot(TowerSpot s) => spot = s;
+
+    public void SetTowerPrice(int price)
     {
-        towerPrice = Dragscript.cost;
+        towerPrice = price;
     }
 
     private void OnMouseDown()
     {
         if (Time.time - lastClickTime <= doubleClickDelay)
-            RemoveTower();
-
+        {
+            Sell();
+        }
         lastClickTime = Time.time;
     }
 
-    private void RemoveTower()
+    private void Sell()
     {
         if (spot != null)
             spot.RemoveTower();
         else
             Destroy(gameObject);
-        CurrencyManager.Instance.AddCurrency(towerPrice/4);
+
+        CurrencyManager.Instance.AddCurrency(towerPrice / 4);
     }
 }
