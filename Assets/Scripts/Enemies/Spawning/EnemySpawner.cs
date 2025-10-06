@@ -12,6 +12,8 @@ public class EnemySpawner : MonoBehaviour
     [Header("Enemy Prefabs")]
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private GameObject[] bossPrefabs;
+    [SerializeField] private GameObject invisibleEnemyPrefab; 
+    [SerializeField] private GameObject healerEnemyPrefab;   
 
     private float timeTillSpawn;
     private bool canSpawn = true;
@@ -71,8 +73,24 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemyPrefabs.Length == 0) return;
 
-        GameObject prefab = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)];
-        GameObject enemyObj = Instantiate(prefab, transform.position, Quaternion.identity);
+        int currentWave = waveChecker.GetCurrentWaveNumber();
+
+        GameObject prefabToSpawn;
+
+        if (currentWave >= 20 && invisibleEnemyPrefab != null && UnityEngine.Random.value < 0.2f) 
+        {
+            prefabToSpawn = invisibleEnemyPrefab;
+        }
+        else if (currentWave >= 10 && healerEnemyPrefab != null && UnityEngine.Random.value < 0.3f) 
+        {
+            prefabToSpawn = healerEnemyPrefab;
+        }
+        else
+        {
+            prefabToSpawn = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)];
+        }
+
+        GameObject enemyObj = Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
 
         // --- Initialize path ---
         PathBuilder pathBuilder = FindObjectOfType<PathBuilder>();

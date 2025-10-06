@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using System;
 
 public class EnemyEvents : MonoBehaviour
 {
@@ -13,7 +13,8 @@ public class EnemyEvents : MonoBehaviour
     {
         if (isBoss) OnBossDefeated?.Invoke();
         else OnEnemyKilled?.Invoke();
-
+        EnemyReward reward = GetComponent<EnemyReward>();
+        reward?.GiveReward();
         Destroy(gameObject);
     }
 

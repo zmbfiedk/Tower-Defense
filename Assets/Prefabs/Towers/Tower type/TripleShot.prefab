@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4108163017713484651}
   - component: {fileID: -2435377564805809976}
   - component: {fileID: 6458030801031576985}
-  - component: {fileID: 558817430184602585}
   - component: {fileID: -2063162681682027371}
   - component: {fileID: 6202119324721408997}
+  - component: {fileID: 3453539613739824685}
   m_Layer: 0
   m_Name: TripleShot
   m_TagString: Tower
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.302113, y: -3.4896193, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,8 +78,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 300
-  m_Sprite: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 1, g: 0.8106513, b: 0, a: 1}
+  m_Sprite: {fileID: 149891582, guid: 9bcedbf4da5a82f4d85abe8920494250, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -125,7 +125,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.8828125}
+    oldSize: {x: 0.64, y: 0.6}
     newSize: {x: 1, y: 0.8828125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -146,21 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe35db8bcb95f4c448cb78bae3d08a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerPrice: 50
---- !u!114 &558817430184602585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3413341225741239609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16d1552000415f4184f695db2ef14f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 50
-  orbitRadius: 9
+  towerPrice: 100
 --- !u!50 &-2063162681682027371
 Rigidbody2D:
   serializedVersion: 4
@@ -201,5 +187,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 1
-  projectilePrefab: {fileID: 0}
-  towerType: 0
+  projectilePrefab: {fileID: 6815579030488834856, guid: 54bcf9b30227b954aa42a62a193d70e2, type: 3}
+  towerType: 1
+--- !u!114 &3453539613739824685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413341225741239609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16d1552000415f4184f695db2ef14f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
+  orbitRadius: 8

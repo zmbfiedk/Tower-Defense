@@ -21,6 +21,7 @@ public class EnemyHealth : MonoBehaviour
         if (currentHealth <= 0f)
         {
             enemyEvents.Die();
+
         }
     }
 }

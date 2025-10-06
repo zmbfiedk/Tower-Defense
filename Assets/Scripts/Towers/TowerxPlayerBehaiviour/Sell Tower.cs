@@ -6,7 +6,8 @@ public class SellTower : MonoBehaviour
     private TowerSpot spot;
     private float lastClickTime;
     private const float doubleClickDelay = 0.3f;
-    [SerializeField] private int towerPrice = 50; // default if not set
+    [SerializeField] private int towerPrice; // default if not set
+    public int TowerPrice => towerPrice;
 
     public void SetSpot(TowerSpot s) => spot = s;
 
@@ -31,6 +32,6 @@ public class SellTower : MonoBehaviour
         else
             Destroy(gameObject);
 
-        CurrencyManager.Instance.AddCurrency(towerPrice / 4);
+        CurrencyManager.Instance.AddCurrency(towerPrice / 2);
     }
 }

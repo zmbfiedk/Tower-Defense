@@ -6,22 +6,34 @@ public class TowerPlacementManager : MonoBehaviour
 
     [SerializeField] private string towerPlacementTag = "TowerPlacement";
     [SerializeField] private float snapDistance = 1f;
-    [SerializeField] private int towerCost = 50;
 
     private void Awake() => Instance = this;
 
     public void TryPlaceTower(GameObject tower)
     {
+
+        SellTower towerStats = tower.GetComponent<SellTower>();
+        if (towerStats == null)
+        {
+            Debug.LogError("No TowerStats script found on this tower prefab!");
+            Destroy(tower);
+            return;
+        }
+
+        int towerCost = towerStats.TowerPrice;
+        Debug.Log("Trying to place tower. Cost: " + towerCost);
+
         TowerSpot spot = FindClosestSpot(tower.transform.position);
 
         if (spot != null && !spot.HasTower && CurrencyManager.Instance.SpendCurrency(towerCost))
         {
             PlaceTower(tower, spot);
+            Debug.Log(" Tower placed successfully. Cost: " + towerCost);
         }
         else
         {
-            Object.Destroy(tower);
-            Debug.Log("Tower placement failed (invalid spot or not enough currency).");
+            Destroy(tower);
+            Debug.Log(" Tower placement failed (invalid spot or not enough currency).");
         }
     }
 
@@ -49,7 +61,6 @@ public class TowerPlacementManager : MonoBehaviour
         tower.transform.position = spot.transform.position;
         tower.transform.SetParent(spot.transform);
         TowerFactory.FinalizeTower(tower);
-
         spot.PlaceTower(tower);
     }
 }

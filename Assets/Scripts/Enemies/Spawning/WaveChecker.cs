@@ -18,6 +18,8 @@ public class WaveChecker : MonoBehaviour
     [SerializeField] private int bossEnemyAmount = 0;
     [SerializeField] private int enemiesspawned;
     public int BossEnemyAmount => bossEnemyAmount;
+    public int GetCurrentWaveNumber() => waveNumber;
+
 
     private void Start()
     {
