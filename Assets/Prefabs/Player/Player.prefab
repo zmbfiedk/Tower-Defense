@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3871931749359977401}
   - component: {fileID: 8756337315135553947}
   - component: {fileID: 8409907926833106372}
-  - component: {fileID: 5111214729706303301}
+  - component: {fileID: 5308886891445353265}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -207,7 +207,7 @@ MonoBehaviour:
   weaponDisplay: {fileID: 0}
   playerWeaponRenderer: {fileID: 1263500948697017331}
   checkInterval: 1
---- !u!114 &5111214729706303301
+--- !u!114 &5308886891445353265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,12 +216,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7271743816004270914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53579509420cc034d9643525cb7255f9, type: 3}
+  m_Script: {fileID: 11500000, guid: bd8035ab5a3de7647934ce3b5c8d564e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireRate: 1
   normalProjectilePrefab: {fileID: 6815579030488834856, guid: 428512f50db5b274792747bc9f903bfd, type: 3}
   fireProjectilePrefab: {fileID: 6815579030488834856, guid: 54bcf9b30227b954aa42a62a193d70e2, type: 3}
-  iceProjectilePrefab: {fileID: 6815579030488834856, guid: 5a36747bb82a1c9499800aa3c83a09f7, type: 3}
-  laserProjectilePrefab: {fileID: 6815579030488834856, guid: 0224fa52997e4c8438dfeca256d1325f, type: 3}
-  projectileSpeed: 30
-  weaponController: {fileID: 8409907926833106372}
+  iceProjectilePrefab: {fileID: 6815579030488834856, guid: 0224fa52997e4c8438dfeca256d1325f, type: 3}
+  laserProjectilePrefab: {fileID: 6815579030488834856, guid: 5a36747bb82a1c9499800aa3c83a09f7, type: 3}

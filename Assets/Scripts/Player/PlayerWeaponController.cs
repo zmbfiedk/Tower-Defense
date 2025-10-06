@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlayerWeaponController : MonoBehaviour
 {
     [Header("Weapon Sprites")]
-    [SerializeField] private Sprite defaultSprite;       // Default weapon sprite when none equipped
+    [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Sprite singleShotSprite;
     [SerializeField] private Sprite tripleShotSprite;
     [SerializeField] private Sprite burstSprite;
@@ -15,12 +15,12 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] private Image weaponDisplay;
 
     [Header("Player Weapon SpriteRenderer")]
-    [SerializeField] private SpriteRenderer playerWeaponRenderer; // The actual weapon in the scene
+    [SerializeField] private SpriteRenderer playerWeaponRenderer;
 
     [Header("Settings")]
     [SerializeField] private float checkInterval = 1f;
 
-    private TowerAttackController.TowerType? currentWeapon = null; // Nullable: null = no weapon equipped
+    private TowerAttackController.TowerType? currentWeapon = null;
     private List<TowerAttackController.TowerType> unlockedWeapons = new List<TowerAttackController.TowerType>();
     private float checkTimer = 0f;
 
@@ -28,7 +28,7 @@ public class PlayerWeaponController : MonoBehaviour
     {
         UpdateUnlockedWeapons();
         if (unlockedWeapons.Count > 0)
-            currentWeapon = unlockedWeapons[unlockedWeapons.Count - 1]; 
+            currentWeapon = unlockedWeapons[unlockedWeapons.Count - 1];
         UpdateWeaponSprite();
     }
 
@@ -53,7 +53,7 @@ public class PlayerWeaponController : MonoBehaviour
         {
             currentWeapon = newWeapon;
             UpdateWeaponSprite();
-            Debug.Log($"Switched to: {currentWeapon}");
+            Debug.Log($"✅ Switched to: {currentWeapon}");
         }
         else
         {
@@ -81,7 +81,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void UpdateWeaponSprite()
     {
-        Sprite newSprite = defaultSprite; 
+        Sprite newSprite = defaultSprite;
 
         if (currentWeapon.HasValue)
         {

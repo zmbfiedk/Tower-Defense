@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(PlayerWeaponController))]
 public class PlayerAttackController : MonoBehaviour
@@ -16,13 +17,13 @@ public class PlayerAttackController : MonoBehaviour
     private float fireCooldown = 0f;
     private PlayerWeaponController weaponController;
     private ProjectileShooter shooter;
+    private Dictionary<TowerAttackController.TowerType, GameObject> prefabMap;
 
     private void Awake()
     {
         weaponController = GetComponent<PlayerWeaponController>();
 
-        // Map weapon types to projectile prefabs
-        var prefabs = new System.Collections.Generic.Dictionary<TowerAttackController.TowerType, GameObject>
+        prefabMap = new Dictionary<TowerAttackController.TowerType, GameObject>
         {
             { TowerAttackController.TowerType.SingleShot, normalProjectilePrefab },
             { TowerAttackController.TowerType.TripleShot, fireProjectilePrefab },
@@ -30,14 +31,13 @@ public class PlayerAttackController : MonoBehaviour
             { TowerAttackController.TowerType.LaserBurst, laserProjectilePrefab }
         };
 
-        shooter = new ProjectileShooter(prefabs, 30f);
+        shooter = new ProjectileShooter(normalProjectilePrefab, 30f);
     }
 
     private void Update()
     {
         fireCooldown -= Time.deltaTime;
 
-        // Fire when left mouse button pressed and cooldown is ready
         if (Input.GetButton("Fire1") && fireCooldown <= 0f)
         {
             Fire();
@@ -48,7 +48,13 @@ public class PlayerAttackController : MonoBehaviour
     private void Fire()
     {
         var currentWeapon = weaponController.GetCurrentWeapon();
-        if (currentWeapon == null) return; // No weapon equipped
+        if (currentWeapon == null) return;
+
+        // Update projectile prefab before shooting
+        if (prefabMap.ContainsKey(currentWeapon.Value))
+        {
+            shooter.SetProjectilePrefab(prefabMap[currentWeapon.Value]);
+        }
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
@@ -56,19 +62,19 @@ public class PlayerAttackController : MonoBehaviour
         switch (currentWeapon.Value)
         {
             case TowerAttackController.TowerType.SingleShot:
-                shooter.ShootSingle(transform.position, mousePos, 0f, currentWeapon.Value);
+                shooter.ShootSingle(transform.position, mousePos, 0f);
                 break;
 
             case TowerAttackController.TowerType.TripleShot:
-                shooter.ShootTriple(transform.position, mousePos, 0f, currentWeapon.Value);
+                shooter.ShootTriple(transform.position, mousePos, 0f);
                 break;
 
             case TowerAttackController.TowerType.Burst:
-                StartCoroutine(shooter.ShootBurst(transform.position, mousePos, 0f, 3, 0.1f, currentWeapon.Value));
+                StartCoroutine(shooter.ShootBurst(transform.position, mousePos, 0f, 3, 0.1f));
                 break;
 
             case TowerAttackController.TowerType.LaserBurst:
-                StartCoroutine(shooter.ShootBurst(transform.position, mousePos, 0f, 5, 0.05f, currentWeapon.Value));
+                StartCoroutine(shooter.ShootBurst(transform.position, mousePos, 0f, 5, 0.05f));
                 break;
         }
     }
