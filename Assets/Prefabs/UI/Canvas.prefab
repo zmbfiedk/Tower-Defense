@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 4133921610916427735}
   - component: {fileID: 2692563938346589124}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Triple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -467,14 +467,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 149891582, guid: 9bcedbf4da5a82f4d85abe8920494250, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -498,7 +498,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPlacementTag: TowerPlacement
   snapDistance: 1
-  towerCost: 100
 --- !u!114 &2692563938346589124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,7 +525,7 @@ GameObject:
   - component: {fileID: 5924246558627493965}
   - component: {fileID: 1083739905335719349}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: LaserBurst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -573,14 +572,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.09687185, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 627522225, guid: 9bcedbf4da5a82f4d85abe8920494250, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -604,7 +603,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPlacementTag: TowerPlacement
   snapDistance: 1
-  towerCost: 200
 --- !u!114 &1083739905335719349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,7 +767,7 @@ GameObject:
   - component: {fileID: 243182647604649093}
   - component: {fileID: 2395907177502411638}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Single
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -816,14 +814,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.69160783, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 769618999, guid: 9bcedbf4da5a82f4d85abe8920494250, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -847,7 +845,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPlacementTag: TowerPlacement
   snapDistance: 1
-  towerCost: 50
 --- !u!114 &2395907177502411638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,7 +872,7 @@ GameObject:
   - component: {fileID: 1486271198059905995}
   - component: {fileID: 8832602966241293300}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Burst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -922,14 +919,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.23509836, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -1655140490, guid: 9bcedbf4da5a82f4d85abe8920494250, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -953,7 +950,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPlacementTag: TowerPlacement
   snapDistance: 1
-  towerCost: 150
 --- !u!114 &8832602966241293300
 MonoBehaviour:
   m_ObjectHideFlags: 0
