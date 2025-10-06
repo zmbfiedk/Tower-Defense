@@ -11,6 +11,11 @@ public class TowerAttackController : MonoBehaviour
     public enum TowerType { SingleShot, TripleShot, Burst, LaserBurst }
     [SerializeField] private TowerType towerType = TowerType.SingleShot;
 
+    // Rename the property to avoid conflict
+    public TowerType Type => towerType;
+
+
+
     private float fireCooldown = 0f;
     private RotatingMovement orbit;
     private ProjectileShooter shooter;

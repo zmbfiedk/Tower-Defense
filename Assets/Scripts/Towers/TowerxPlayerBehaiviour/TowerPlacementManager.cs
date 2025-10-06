@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class TowerPlacementManager : MonoBehaviour
 {
+    public static event Action OnTowerPlace;
     public static TowerPlacementManager Instance;
+
 
     [SerializeField] private string towerPlacementTag = "TowerPlacement";
     [SerializeField] private float snapDistance = 1f;
@@ -29,6 +32,7 @@ public class TowerPlacementManager : MonoBehaviour
         {
             PlaceTower(tower, spot);
             Debug.Log(" Tower placed successfully. Cost: " + towerCost);
+            OnTowerPlace?.Invoke();
         }
         else
         {
