@@ -122,34 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &291298847 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 87043897887987239, guid: d8ccc041b84bfbb44b15d06a8bdd471a, type: 3}
-  m_PrefabInstance: {fileID: 1496755121}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &291298848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291298847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db3c325a49bf65041805f0c173cc5402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minSpawnTime: 1
-  maxSpawnTime: 5
-  enemyPrefabs:
-  - {fileID: 4190395355569365779, guid: 4f5abcf2a31ee934b93d905e6ceb83c4, type: 3}
-  - {fileID: 4190395355569365779, guid: 591e23beb8a76e0458b4256058578eb3, type: 3}
-  - {fileID: 4190395355569365779, guid: a530f2e79b98a914ca8858bf80d2995f, type: 3}
-  - {fileID: 4190395355569365779, guid: 38cd35eb8385c694595561d8eac685f6, type: 3}
-  - {fileID: 4190395355569365779, guid: ff7d7c4134ca5324b9e8a4f614041033, type: 3}
-  - {fileID: 4190395355569365779, guid: 54e103399f3e62045b6032bf1e76d484, type: 3}
-  bossPrefabs:
-  - {fileID: 4190395355569365779, guid: 404f346eaa1a6c042a4c70b6ee70a66c, type: 3}
 --- !u!1001 &775303503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -515,10 +487,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 87043897887987239, guid: d8ccc041b84bfbb44b15d06a8bdd471a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 291298848}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8ccc041b84bfbb44b15d06a8bdd471a, type: 3}
 --- !u!1001 &3547811386804792784
 PrefabInstance:

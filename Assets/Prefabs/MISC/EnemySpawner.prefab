@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6635482751245472099}
+  - component: {fileID: 3204017672912780931}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -31,3 +32,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3204017672912780931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87043897887987239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db3c325a49bf65041805f0c173cc5402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpawnTime: 1
+  maxSpawnTime: 5
+  enemyPrefabs:
+  - {fileID: 4190395355569365779, guid: 4f5abcf2a31ee934b93d905e6ceb83c4, type: 3}
+  - {fileID: 4190395355569365779, guid: 591e23beb8a76e0458b4256058578eb3, type: 3}
+  - {fileID: 4190395355569365779, guid: a530f2e79b98a914ca8858bf80d2995f, type: 3}
+  - {fileID: 4190395355569365779, guid: 38cd35eb8385c694595561d8eac685f6, type: 3}
+  - {fileID: 4190395355569365779, guid: ff7d7c4134ca5324b9e8a4f614041033, type: 3}
+  - {fileID: 4190395355569365779, guid: 54e103399f3e62045b6032bf1e76d484, type: 3}
+  bossPrefabs:
+  - {fileID: 4190395355569365779, guid: 404f346eaa1a6c042a4c70b6ee70a66c, type: 3}
