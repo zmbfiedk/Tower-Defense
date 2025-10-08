@@ -1,12 +1,33 @@
-using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
+using UnityEngine;
 
 [RequireComponent(typeof(PlayerWeaponController))]
 public class PlayerAttackController : MonoBehaviour
 {
+    public event Action<float> OnReload; // remove static
+
+
+
     [Header("Attack Settings")]
-    [SerializeField] private float fireRate = 1f;
+    [SerializeField] private float fireRate = 10f;
+    [Tooltip("Time in seconds to reload one weapon")]
+    [SerializeField] private float reloadTime = 1.5f;
+    [SerializeField] private bool autoReloadOnEmpty = true;
+
+    [Header("Magazine - initial (current) ammo)")]
+    [SerializeField] private int Pammo = 5;  
+    [SerializeField] private int Sammo = 2;   
+    [SerializeField] private int Bammo = 7;   
+    [SerializeField] private int Lammo = 9;   
+
+    [Header("Magazine Size (max)")]
+    [SerializeField] private int PammoMax = 5;
+    [SerializeField] private int SammoMax = 3;
+    [SerializeField] private int BammoMax = 7;
+    [SerializeField] private int LammoMax = 9;
 
     [Header("Projectile Prefabs")]
     [SerializeField] private GameObject normalProjectilePrefab;
@@ -16,8 +37,15 @@ public class PlayerAttackController : MonoBehaviour
 
     private float fireCooldown = 0f;
     private PlayerWeaponController weaponController;
-    private ProjectileShooter shooter;
+    private PlayerProjShooter shooter;
+
+    private Dictionary<TowerAttackController.TowerType, int> currentAmmo;
+    private Dictionary<TowerAttackController.TowerType, int> maxAmmo;
     private Dictionary<TowerAttackController.TowerType, GameObject> prefabMap;
+
+    private bool isReloading = false;
+
+    public event Action<TowerAttackController.TowerType, int, int> OnAmmoChanged;
 
     private void Awake()
     {
@@ -31,14 +59,39 @@ public class PlayerAttackController : MonoBehaviour
             { TowerAttackController.TowerType.LaserBurst, laserProjectilePrefab }
         };
 
-        shooter = new ProjectileShooter(normalProjectilePrefab, 30f);
+        // setup ammo dictionaries
+        currentAmmo = new Dictionary<TowerAttackController.TowerType, int>
+        {
+            { TowerAttackController.TowerType.SingleShot, Mathf.Clamp(Pammo, 0, PammoMax) },
+            { TowerAttackController.TowerType.TripleShot, Mathf.Clamp(Sammo, 0, SammoMax) },
+            { TowerAttackController.TowerType.Burst, Mathf.Clamp(Bammo, 0, BammoMax) },
+            { TowerAttackController.TowerType.LaserBurst, Mathf.Clamp(Lammo, 0, LammoMax) }
+        };
+
+        maxAmmo = new Dictionary<TowerAttackController.TowerType, int>
+        {
+            { TowerAttackController.TowerType.SingleShot, PammoMax },
+            { TowerAttackController.TowerType.TripleShot, SammoMax },
+            { TowerAttackController.TowerType.Burst, BammoMax },
+            { TowerAttackController.TowerType.LaserBurst, LammoMax }
+        };
+
+        shooter = new PlayerProjShooter(normalProjectilePrefab, 30f);
+        foreach (var kv in currentAmmo)
+            OnAmmoChanged?.Invoke(kv.Key, kv.Value, maxAmmo[kv.Key]);
     }
 
     private void Update()
     {
         fireCooldown -= Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            var currentWeapon = weaponController.GetCurrentWeapon();
+            if (currentWeapon != null)
+                TryReload(currentWeapon.Value);
+        }
 
-        if (Input.GetButton("Fire1") && fireCooldown <= 0f)
+        if (Input.GetButton("Fire1") && fireCooldown <= 0f && !isReloading)
         {
             Fire();
             fireCooldown = 1f / fireRate;
@@ -50,32 +103,96 @@ public class PlayerAttackController : MonoBehaviour
         var currentWeapon = weaponController.GetCurrentWeapon();
         if (currentWeapon == null) return;
 
-        // Update projectile prefab before shooting
-        if (prefabMap.ContainsKey(currentWeapon.Value))
-        {
-            shooter.SetProjectilePrefab(prefabMap[currentWeapon.Value]);
-        }
+        var type = currentWeapon.Value;
+
+        if (prefabMap.ContainsKey(type))
+            shooter.SetProjectilePrefab(prefabMap[type]);
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
 
-        switch (currentWeapon.Value)
+        if (!currentAmmo.ContainsKey(type) || currentAmmo[type] <= 0)
+        {
+            if (autoReloadOnEmpty)
+                TryReload(type);
+            return;
+        }
+
+        switch (type)
         {
             case TowerAttackController.TowerType.SingleShot:
-                shooter.ShootSingle(transform.position, mousePos, 0f);
+                shooter.ShootSingle(transform.position, mousePos);
+                DecreaseAmmo(type, 1);
                 break;
 
             case TowerAttackController.TowerType.TripleShot:
-                shooter.ShootTriple(transform.position, mousePos, 0f);
+                shooter.ShootTriple(transform.position, mousePos);
+                DecreaseAmmo(type, 1);
                 break;
 
             case TowerAttackController.TowerType.Burst:
-                StartCoroutine(shooter.ShootBurst(transform.position, mousePos, 0f, 3, 0.1f));
+                StartCoroutine(DoBurstShots(type, 3, 0.1f, mousePos));
                 break;
 
             case TowerAttackController.TowerType.LaserBurst:
-                StartCoroutine(shooter.ShootBurst(transform.position, mousePos, 0f, 5, 0.05f));
+                StartCoroutine(DoBurstShots(type, 5, 0.05f, mousePos));
                 break;
         }
+    }
+
+    private IEnumerator DoBurstShots(TowerAttackController.TowerType type, int shots, float delay, Vector3 targetPos)
+    {
+        for (int i = 0; i < shots; i++)
+        {
+            if (isReloading || !currentAmmo.ContainsKey(type) || currentAmmo[type] <= 0)
+                yield break;
+
+            shooter.ShootSingle(transform.position, targetPos);
+            DecreaseAmmo(type, 1);
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
+    private void DecreaseAmmo(TowerAttackController.TowerType type, int amount)
+    {
+        if (!currentAmmo.ContainsKey(type)) return;
+
+        currentAmmo[type] = Mathf.Max(0, currentAmmo[type] - amount);
+        OnAmmoChanged?.Invoke(type, currentAmmo[type], maxAmmo[type]);
+
+        if (currentAmmo[type] <= 0 && autoReloadOnEmpty)
+            TryReload(type);
+    }
+
+    public void TryReload(TowerAttackController.TowerType type)
+    {
+        if (isReloading) return;
+        if (!maxAmmo.ContainsKey(type)) return;
+        if (currentAmmo[type] >= maxAmmo[type]) return; 
+
+        StartCoroutine(ReloadWeapon(type));
+    }
+
+    private IEnumerator ReloadWeapon(TowerAttackController.TowerType type)
+    {
+        isReloading = true;
+        OnReload?.Invoke(reloadTime); // pass reloadTime
+
+        yield return new WaitForSeconds(reloadTime);
+
+        currentAmmo[type] = maxAmmo[type];
+        OnAmmoChanged?.Invoke(type, currentAmmo[type], maxAmmo[type]);
+
+        isReloading = false;
+    }
+
+    public int GetCurrentAmmo(TowerAttackController.TowerType type)
+    {
+        return currentAmmo.ContainsKey(type) ? currentAmmo[type] : 0;
+    }
+
+    public int GetMaxAmmo(TowerAttackController.TowerType type)
+    {
+        return maxAmmo.ContainsKey(type) ? maxAmmo[type] : 0;
     }
 }
