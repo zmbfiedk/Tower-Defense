@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -1500401214807899898}
   - component: {fileID: -345984416857975271}
   - component: {fileID: 4558963586969870072}
+  - component: {fileID: 2729887556735893351}
   m_Layer: 0
   m_Name: Healer
   m_TagString: Enemy
@@ -237,3 +238,15 @@ MonoBehaviour:
   healAmount: 0.1
   healInterval: 0.2
   healArea: {fileID: -345984416857975271}
+--- !u!114 &2729887556735893351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25901472982766429dc65a93bedb50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

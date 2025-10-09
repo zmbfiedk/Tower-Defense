@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -10,15 +11,17 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float maxSpawnTime = 5f;
 
     [Header("Enemy Prefabs")]
-    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private List<GameObject> enemyPrefabs = new List<GameObject>();
     [SerializeField] private GameObject[] bossPrefabs;
-    [SerializeField] private GameObject invisibleEnemyPrefab; 
-    [SerializeField] private GameObject healerEnemyPrefab;   
+    [SerializeField] private GameObject invisibleEnemyPrefab;
+    [SerializeField] private GameObject healerEnemyPrefab;
 
     private float timeTillSpawn;
     private bool canSpawn = true;
     private WaveChecker waveChecker;
-
+    private bool healerUnlocked = false;
+    private bool invisibleUnlocked = false;
+    private float spawnTimeMultiplier = 1f; 
     private void Awake()
     {
         if (minSpawnTime > maxSpawnTime)
@@ -66,29 +69,33 @@ public class EnemySpawner : MonoBehaviour
 
     private void ResetSpawnTimer()
     {
-        timeTillSpawn = UnityEngine.Random.Range(minSpawnTime, maxSpawnTime);
+        float effectiveMin = minSpawnTime * spawnTimeMultiplier;
+        float effectiveMax = maxSpawnTime * spawnTimeMultiplier;
+        timeTillSpawn = UnityEngine.Random.Range(effectiveMin, effectiveMax);
     }
 
     private void SpawnEnemy()
     {
-        if (enemyPrefabs.Length == 0) return;
+        if (enemyPrefabs.Count == 0) return;
 
         int currentWave = waveChecker.GetCurrentWaveNumber();
 
-        GameObject prefabToSpawn;
+        GameObject prefabToSpawn = null;
 
-        if (currentWave >= 20 && invisibleEnemyPrefab != null && UnityEngine.Random.value < 0.2f) 
+        if (currentWave >= 20 && invisibleUnlocked && invisibleEnemyPrefab != null && UnityEngine.Random.value < 0.2f)
         {
             prefabToSpawn = invisibleEnemyPrefab;
         }
-        else if (currentWave >= 10 && healerEnemyPrefab != null && UnityEngine.Random.value < 0.3f) 
+        else if (currentWave >= 10 && healerUnlocked && healerEnemyPrefab != null && UnityEngine.Random.value < 0.3f)
         {
             prefabToSpawn = healerEnemyPrefab;
         }
         else
         {
-            prefabToSpawn = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)];
+            prefabToSpawn = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Count)];
         }
+
+        if (prefabToSpawn == null) return;
 
         GameObject enemyObj = Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
 
@@ -123,4 +130,19 @@ public class EnemySpawner : MonoBehaviour
 
     private void StopSpawning() => canSpawn = false;
     private void AllowSpawning() => canSpawn = true;
+    public void SetSpawnTimeMultiplier(float multiplier)
+    {
+        spawnTimeMultiplier = Mathf.Max(0.01f, multiplier);
+        ResetSpawnTimer();
+    }
+
+    public void UnlockHealer() => healerUnlocked = true;
+    public void UnlockInvisible() => invisibleUnlocked = true;
+
+    public void AddEnemyPrefabToPool(GameObject prefab)
+    {
+        if (prefab == null) return;
+        if (!enemyPrefabs.Contains(prefab))
+            enemyPrefabs.Add(prefab);
+    }
 }

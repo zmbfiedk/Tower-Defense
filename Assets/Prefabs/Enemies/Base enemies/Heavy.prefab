@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -6511511690879037611}
   - component: {fileID: -8028377790359984536}
   - component: {fileID: -8377862452529581806}
+  - component: {fileID: 4520680224292462201}
   m_Layer: 0
   m_Name: Heavy
   m_TagString: Enemy
@@ -207,3 +208,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
+--- !u!114 &4520680224292462201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190395355569365779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25901472982766429dc65a93bedb50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

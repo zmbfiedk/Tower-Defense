@@ -11,7 +11,12 @@ public class EnemyPath : MonoBehaviour
 
     public float Speed => speed;
 
+    private float baseSpeed;
 
+    private void Awake()
+    {
+        baseSpeed = speed;
+    }
 
     public void Initialize(Transform[] points)
     {
@@ -35,5 +40,11 @@ public class EnemyPath : MonoBehaviour
             if (currentTargetIndex >= patrolPoints.Length)
                 OnReachedEnd?.Invoke();
         }
+    }
+
+    public void ApplySpeedMultiplier(float multiplier)
+    {
+        if (multiplier <= 0f) multiplier = 1f;
+        speed = baseSpeed * multiplier;
     }
 }

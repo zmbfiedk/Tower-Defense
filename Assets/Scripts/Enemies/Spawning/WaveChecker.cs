@@ -6,6 +6,7 @@ public class WaveChecker : MonoBehaviour
     public static event Action OnMaxEnemySpawn;
     public static event Action OnWaveOver;
     public static event Action OnBossWave;
+    public static event Action<int> On10WavesCompleted;  // now sends wave number
 
     [Header("Settings")]
     [SerializeField] private string enemyTag = "Enemy";
@@ -69,7 +70,7 @@ public class WaveChecker : MonoBehaviour
         OnWaveOver?.Invoke();
         Invoke(nameof(StartNextWave), 5f);
         enemiesToKillThisWave++;
-        CurrencyManager.Instance.AddCurrency(waveNumber * 10); 
+        CurrencyManager.Instance.AddCurrency(waveNumber * 10);
     }
 
     private void StartNextWave()
@@ -77,7 +78,7 @@ public class WaveChecker : MonoBehaviour
         waveNumber++;
         enemiesKilled = 0;
         enemiesspawned = 0; // reset for next wave
-        enemiesToKillThisWave+= 5;
+        enemiesToKillThisWave += 5;
         waveActive = true;
 
         Debug.Log($"[WaveChecker] Wave {waveNumber} started. Kill {enemiesToKillThisWave} enemies.");
@@ -88,6 +89,7 @@ public class WaveChecker : MonoBehaviour
             waveActive = false; // stop normal spawning
             bossEnemyAmount++;
             OnBossWave?.Invoke();
+            On10WavesCompleted?.Invoke(waveNumber); // send wave number
         }
     }
 
