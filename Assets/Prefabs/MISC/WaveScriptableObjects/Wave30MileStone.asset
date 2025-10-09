@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1ca4272f0082504094d32f1a1cef368, type: 3}
-  m_Name: Wave20Milestone
+  m_Name: Wave30MileStone
   m_EditorClassIdentifier: 
-  waveNumber: 10
-  healthMultiplier: 1
-  speedMultiplier: 1
+  waveNumber: 30
+  healthMultiplier: 1.5
+  speedMultiplier: 1.1
   damageMultiplier: 1
-  spawnRateMultiplier: 1
+  spawnRateMultiplier: 1.5
   unlockHealer: 0
   unlockInvisible: 0
-  unlockNewEnemy: 0
-  newEnemyPrefab: {fileID: 0}
+  unlockNewEnemy: 1
+  newEnemyPrefab: {fileID: 5566627567197155178, guid: 0cf944c68e25fdf48ae6d214437851f8, type: 3}

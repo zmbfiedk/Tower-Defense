@@ -13,6 +13,7 @@ TagManager:
   - Bullet
   - Currency manager
   - Boss
+  - WaveManager
   layers:
   - Default
   - TransparentFX

@@ -124,7 +124,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7271743816004270914}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -219,7 +219,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8035ab5a3de7647934ce3b5c8d564e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 1
+  fireRate: 10
+  reloadTime: 1.5
+  autoReloadOnEmpty: 1
+  Pammo: 5
+  Sammo: 2
+  Bammo: 7
+  Lammo: 8
+  PammoMax: 5
+  SammoMax: 3
+  BammoMax: 7
+  LammoMax: 9
   normalProjectilePrefab: {fileID: 6815579030488834856, guid: 428512f50db5b274792747bc9f903bfd, type: 3}
   fireProjectilePrefab: {fileID: 6815579030488834856, guid: 54bcf9b30227b954aa42a62a193d70e2, type: 3}
   iceProjectilePrefab: {fileID: 6815579030488834856, guid: 0224fa52997e4c8438dfeca256d1325f, type: 3}
