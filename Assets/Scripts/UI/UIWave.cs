@@ -4,12 +4,13 @@ using TMPro;
 
 public class UiWave : MonoBehaviour
 {
-    [SerializeField] private WaveChecker waveChecker;       // Can assign in Inspector, or it will find
-    [SerializeField] private TextMeshProUGUI textMeshPro;    // Assign in Inspector!
+    [SerializeField] private WaveChecker waveChecker;
+    [SerializeField] private TextMeshProUGUI textMeshPro;
 
-    private int waveNumber;
+    private int lastShownWave = -1;
+    private Coroutine waveRoutine;
 
-    void Start()
+    private void Start()
     {
         if (waveChecker == null)
         {
@@ -18,35 +19,37 @@ public class UiWave : MonoBehaviour
             {
                 waveChecker = waveManagerObject.GetComponent<WaveChecker>();
             }
+            else
+            {
+                Debug.LogError("[UiWave] No object with tag 'WaveManager' found!");
+            }
         }
-
 
         if (textMeshPro == null)
         {
-            Debug.LogError("TextMeshProUGUI is NOT assigned in Inspector!");
+            Debug.LogError("[UiWave] TextMeshProUGUI not assigned!");
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (textMeshPro == null) return;
+        if (waveChecker == null || textMeshPro == null) return;
 
-        int currentWave = 0;
-        if (waveChecker != null)
+        int currentWave = waveChecker.GetWaveNumber();
+
+        if (currentWave != lastShownWave)
         {
-            currentWave = waveChecker.GetWaveNumber();
-        }
+            lastShownWave = currentWave;
+            if (waveRoutine != null)
+                StopCoroutine(waveRoutine);
 
-        if (currentWave != waveNumber)
-        {
-            StartCoroutine(WaveCoroutine(currentWave));
-            waveNumber = currentWave;
+            waveRoutine = StartCoroutine(ShowWaveText(currentWave));
         }
-
     }
 
-    IEnumerator WaveCoroutine(int wave)
+    private IEnumerator ShowWaveText(int wave)
     {
+
         textMeshPro.text = "Wave " + wave;
         yield return new WaitForSeconds(2f);
         textMeshPro.text = "";
