@@ -8,13 +8,11 @@ public class TowerAttackController : MonoBehaviour
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private GameObject projectilePrefab;
 
-    public enum TowerType { SingleShot, TripleShot, Burst, LaserBurst }
+    public enum TowerType { SingleShot, TripleShot, Burst, LaserBurst, Rifle, FreezeThree }
     [SerializeField] private TowerType towerType = TowerType.SingleShot;
 
-    // Rename the property to avoid conflict
+    // Expose the type without naming conflict
     public TowerType Type => towerType;
-
-
 
     private float fireCooldown = 0f;
     private RotatingMovement orbit;
@@ -40,7 +38,7 @@ public class TowerAttackController : MonoBehaviour
 
     private void Fire()
     {
-        bool canSeeInvisible = (towerType == TowerType.LaserBurst);
+        bool canSeeInvisible = (towerType == TowerType.LaserBurst || towerType == TowerType.Rifle);
 
         switch (towerType)
         {
@@ -59,7 +57,16 @@ public class TowerAttackController : MonoBehaviour
             case TowerType.LaserBurst:
                 StartCoroutine(shooter.ShootBurst(transform.position, orbit.GetSpotPosition(), orbit.GetRadius(), 5, 0.05f, canSeeInvisible));
                 break;
+
+            case TowerType.Rifle:
+                // Rifle: fast, accurate single shots. Tweak this tower's fireRate in Inspector.
+                shooter.ShootSingle(transform.position, orbit.GetSpotPosition(), orbit.GetRadius(), canSeeInvisible);
+                break;
+
+            case TowerType.FreezeThree:
+                // FreezeThree: shoots triple freeze projectiles (each projectile slows first enemy hit).
+                shooter.ShootTriple(transform.position, orbit.GetSpotPosition(), orbit.GetRadius(), canSeeInvisible);
+                break;
         }
     }
-
 }

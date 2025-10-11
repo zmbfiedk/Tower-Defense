@@ -10,6 +10,8 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] private Sprite tripleShotSprite;
     [SerializeField] private Sprite burstSprite;
     [SerializeField] private Sprite laserBurstSprite;
+    [SerializeField] private Sprite rifleSprite;
+    [SerializeField] private Sprite freezeThreeSprite;
 
     [Header("Weapon Display (Optional UI)")]
     [SerializeField] private Image weaponDisplay;
@@ -38,6 +40,8 @@ public class PlayerWeaponController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2)) TrySwitchWeapon(TowerAttackController.TowerType.TripleShot);
         if (Input.GetKeyDown(KeyCode.Alpha3)) TrySwitchWeapon(TowerAttackController.TowerType.Burst);
         if (Input.GetKeyDown(KeyCode.Alpha4)) TrySwitchWeapon(TowerAttackController.TowerType.LaserBurst);
+        if (Input.GetKeyDown(KeyCode.Alpha5)) TrySwitchWeapon(TowerAttackController.TowerType.Rifle);
+        if (Input.GetKeyDown(KeyCode.Alpha6)) TrySwitchWeapon(TowerAttackController.TowerType.FreezeThree);
 
         checkTimer -= Time.deltaTime;
         if (checkTimer <= 0f)
@@ -64,18 +68,22 @@ public class PlayerWeaponController : MonoBehaviour
     private void UpdateUnlockedWeapons()
     {
         TowerAttackController[] towers = FindObjectsOfType<TowerAttackController>();
-        TowerAttackController.TowerType highestTowerType = TowerAttackController.TowerType.SingleShot;
+
+        unlockedWeapons.Clear();
 
         foreach (var tower in towers)
         {
-            if ((int)tower.Type > (int)highestTowerType)
-                highestTowerType = tower.Type;
+            if (!unlockedWeapons.Contains(tower.Type))
+            {
+                unlockedWeapons.Add(tower.Type);
+            }
         }
 
-        unlockedWeapons.Clear();
-        for (int i = 0; i <= (int)highestTowerType; i++)
+        // ensure current weapon is valid
+        if (currentWeapon.HasValue && !unlockedWeapons.Contains(currentWeapon.Value))
         {
-            unlockedWeapons.Add((TowerAttackController.TowerType)i);
+            currentWeapon = unlockedWeapons.Count > 0 ? unlockedWeapons[0] : (TowerAttackController.TowerType?)null;
+            UpdateWeaponSprite();
         }
     }
 
@@ -91,6 +99,8 @@ public class PlayerWeaponController : MonoBehaviour
                 case TowerAttackController.TowerType.TripleShot: newSprite = tripleShotSprite; break;
                 case TowerAttackController.TowerType.Burst: newSprite = burstSprite; break;
                 case TowerAttackController.TowerType.LaserBurst: newSprite = laserBurstSprite; break;
+                case TowerAttackController.TowerType.Rifle: newSprite = rifleSprite; break;
+                case TowerAttackController.TowerType.FreezeThree: newSprite = freezeThreeSprite; break;
             }
         }
         if (weaponDisplay != null) weaponDisplay.sprite = newSprite;

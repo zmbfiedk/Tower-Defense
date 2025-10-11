@@ -6,9 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerWeaponController))]
 public class PlayerAttackController : MonoBehaviour
 {
-    public event Action<float> OnReload; // remove static
-
-
+    public event Action<float> OnReload; // non-static
 
     [Header("Attack Settings")]
     [SerializeField] private float fireRate = 10f;
@@ -17,26 +15,32 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField] private bool autoReloadOnEmpty = true;
 
     [Header("Magazine - initial (current) ammo)")]
-    [SerializeField] private int Pammo = 5;  
-    [SerializeField] private int Sammo = 2;   
-    [SerializeField] private int Bammo = 7;   
-    [SerializeField] private int Lammo = 9;   
+    [SerializeField] private int Pammo = 5;   // SingleShot
+    [SerializeField] private int Sammo = 2;   // TripleShot
+    [SerializeField] private int Bammo = 7;   // Burst
+    [SerializeField] private int Lammo = 9;   // LaserBurst
+    [SerializeField] private int Rammo = 30;  // Rifle
+    [SerializeField] private int Frammo = 3;  // FreezeThree
 
     [Header("Magazine Size (max)")]
     [SerializeField] private int PammoMax = 5;
     [SerializeField] private int SammoMax = 3;
     [SerializeField] private int BammoMax = 7;
     [SerializeField] private int LammoMax = 9;
+    [SerializeField] private int RammoMax = 60;
+    [SerializeField] private int FrammoMax = 3;
 
     [Header("Projectile Prefabs")]
     [SerializeField] private GameObject normalProjectilePrefab;
     [SerializeField] private GameObject fireProjectilePrefab;
     [SerializeField] private GameObject iceProjectilePrefab;
     [SerializeField] private GameObject laserProjectilePrefab;
+    [SerializeField] private GameObject rifleProjectilePrefab;
+    [SerializeField] private GameObject freezeProjectilePrefab;
 
     private float fireCooldown = 0f;
     private PlayerWeaponController weaponController;
-    private PlayerProjShooter shooter;
+    private PlayerProjShooter shooter; // your project already had this type
 
     private Dictionary<TowerAttackController.TowerType, int> currentAmmo;
     private Dictionary<TowerAttackController.TowerType, int> maxAmmo;
@@ -51,20 +55,24 @@ public class PlayerAttackController : MonoBehaviour
         weaponController = GetComponent<PlayerWeaponController>();
 
         prefabMap = new Dictionary<TowerAttackController.TowerType, GameObject>
-        {
-            { TowerAttackController.TowerType.SingleShot, normalProjectilePrefab },
-            { TowerAttackController.TowerType.TripleShot, fireProjectilePrefab },
-            { TowerAttackController.TowerType.Burst, iceProjectilePrefab },
-            { TowerAttackController.TowerType.LaserBurst, laserProjectilePrefab }
-        };
+    {
+        { TowerAttackController.TowerType.SingleShot, normalProjectilePrefab },
+        { TowerAttackController.TowerType.TripleShot, fireProjectilePrefab },
+        { TowerAttackController.TowerType.Burst, iceProjectilePrefab },
+        { TowerAttackController.TowerType.LaserBurst, laserProjectilePrefab },
+        { TowerAttackController.TowerType.Rifle, rifleProjectilePrefab },         // new prefab
+        { TowerAttackController.TowerType.FreezeThree, freezeProjectilePrefab }   // new prefab
+    };
 
-        // setup ammo dictionaries
+
         currentAmmo = new Dictionary<TowerAttackController.TowerType, int>
         {
             { TowerAttackController.TowerType.SingleShot, Mathf.Clamp(Pammo, 0, PammoMax) },
             { TowerAttackController.TowerType.TripleShot, Mathf.Clamp(Sammo, 0, SammoMax) },
             { TowerAttackController.TowerType.Burst, Mathf.Clamp(Bammo, 0, BammoMax) },
-            { TowerAttackController.TowerType.LaserBurst, Mathf.Clamp(Lammo, 0, LammoMax) }
+            { TowerAttackController.TowerType.LaserBurst, Mathf.Clamp(Lammo, 0, LammoMax) },
+            { TowerAttackController.TowerType.Rifle, Mathf.Clamp(Rammo, 0, RammoMax) },
+            { TowerAttackController.TowerType.FreezeThree, Mathf.Clamp(Frammo, 0, FrammoMax) }
         };
 
         maxAmmo = new Dictionary<TowerAttackController.TowerType, int>
@@ -72,7 +80,9 @@ public class PlayerAttackController : MonoBehaviour
             { TowerAttackController.TowerType.SingleShot, PammoMax },
             { TowerAttackController.TowerType.TripleShot, SammoMax },
             { TowerAttackController.TowerType.Burst, BammoMax },
-            { TowerAttackController.TowerType.LaserBurst, LammoMax }
+            { TowerAttackController.TowerType.LaserBurst, LammoMax },
+            { TowerAttackController.TowerType.Rifle, RammoMax },
+            { TowerAttackController.TowerType.FreezeThree, FrammoMax }
         };
 
         shooter = new PlayerProjShooter(normalProjectilePrefab, 30f);
@@ -136,6 +146,18 @@ public class PlayerAttackController : MonoBehaviour
             case TowerAttackController.TowerType.LaserBurst:
                 StartCoroutine(DoBurstShots(type, 5, 0.05f, mousePos));
                 break;
+
+            case TowerAttackController.TowerType.Rifle:
+                // Rifle: single fast shots. Player fireRate controls the speed (set higher in Inspector).
+                shooter.ShootSingle(transform.position, mousePos);
+                DecreaseAmmo(type, 1);
+                break;
+
+            case TowerAttackController.TowerType.FreezeThree:
+                // FreezeThree: three freezing projectiles (each projectile applies single-target slow and disappears)
+                shooter.ShootTriple(transform.position, mousePos);
+                DecreaseAmmo(type, 1);
+                break;
         }
     }
 
@@ -167,7 +189,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (isReloading) return;
         if (!maxAmmo.ContainsKey(type)) return;
-        if (currentAmmo[type] >= maxAmmo[type]) return; 
+        if (currentAmmo[type] >= maxAmmo[type]) return;
 
         StartCoroutine(ReloadWeapon(type));
     }
@@ -175,7 +197,7 @@ public class PlayerAttackController : MonoBehaviour
     private IEnumerator ReloadWeapon(TowerAttackController.TowerType type)
     {
         isReloading = true;
-        OnReload?.Invoke(reloadTime); // pass reloadTime
+        OnReload?.Invoke(reloadTime);
 
         yield return new WaitForSeconds(reloadTime);
 
