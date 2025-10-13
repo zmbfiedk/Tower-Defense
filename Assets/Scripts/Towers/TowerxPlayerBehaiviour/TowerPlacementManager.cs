@@ -6,7 +6,6 @@ public class TowerPlacementManager : MonoBehaviour
     public static event Action OnTowerPlace;
     public static TowerPlacementManager Instance;
 
-
     [SerializeField] private string towerPlacementTag = "TowerPlacement";
     [SerializeField] private float snapDistance = 1f;
 
@@ -14,7 +13,6 @@ public class TowerPlacementManager : MonoBehaviour
 
     public void TryPlaceTower(GameObject tower)
     {
-
         SellTower towerStats = tower.GetComponent<SellTower>();
         if (towerStats == null)
         {
@@ -31,13 +29,13 @@ public class TowerPlacementManager : MonoBehaviour
         if (spot != null && !spot.HasTower && CurrencyManager.Instance.SpendCurrency(towerCost))
         {
             PlaceTower(tower, spot);
-            Debug.Log(" Tower placed successfully. Cost: " + towerCost);
+            Debug.Log("Tower placed successfully. Cost: " + towerCost);
             OnTowerPlace?.Invoke();
         }
         else
         {
             Destroy(tower);
-            Debug.Log(" Tower placement failed (invalid spot or not enough currency).");
+            Debug.Log("Tower placement failed (invalid spot or not enough currency).");
         }
     }
 
@@ -58,6 +56,11 @@ public class TowerPlacementManager : MonoBehaviour
         }
 
         return closestSpot;
+    }
+
+    public TowerSpot GetClosestSpot(Vector3 position)
+    {
+        return FindClosestSpot(position);
     }
 
     private void PlaceTower(GameObject tower, TowerSpot spot)

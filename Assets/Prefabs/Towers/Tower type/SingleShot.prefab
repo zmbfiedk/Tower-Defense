@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -4424715459195216705}
   - component: {fileID: 2967126303240621948}
   - component: {fileID: -1854494312102743858}
+  - component: {fileID: -4065294692158089203}
   m_Layer: 0
   m_Name: SingleShot
   m_TagString: Tower
@@ -203,3 +204,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 50
   orbitRadius: 10
+--- !u!114 &-4065294692158089203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4719798817163162122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac1fdb668b79a541b6099aeaa9d7f70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3
+  segments: 50

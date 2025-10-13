@@ -148,13 +148,11 @@ public class PlayerAttackController : MonoBehaviour
                 break;
 
             case TowerAttackController.TowerType.Rifle:
-                // Rifle: single fast shots. Player fireRate controls the speed (set higher in Inspector).
                 shooter.ShootSingle(transform.position, mousePos);
                 DecreaseAmmo(type, 1);
                 break;
 
             case TowerAttackController.TowerType.FreezeThree:
-                // FreezeThree: three freezing projectiles (each projectile applies single-target slow and disappears)
                 shooter.ShootTriple(transform.position, mousePos);
                 DecreaseAmmo(type, 1);
                 break;
