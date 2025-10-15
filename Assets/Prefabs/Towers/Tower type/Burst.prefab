@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 1
   projectilePrefab: {fileID: 6815579030488834856, guid: 5a36747bb82a1c9499800aa3c83a09f7, type: 3}
-  towerType: 4
+  towerType: 2
 --- !u!114 &-2557904826276220254
 MonoBehaviour:
   m_ObjectHideFlags: 0

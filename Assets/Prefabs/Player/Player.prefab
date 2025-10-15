@@ -84,7 +84,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.44, y: 0.45}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -154,7 +154,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.44, y: 0.45}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.44, y: 0.45}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -204,6 +204,8 @@ MonoBehaviour:
   tripleShotSprite: {fileID: 534238387, guid: ff137d9e047f9594786ea6b9c2db0a4f, type: 3}
   burstSprite: {fileID: -2013431666, guid: ff137d9e047f9594786ea6b9c2db0a4f, type: 3}
   laserBurstSprite: {fileID: -1630665538, guid: ff137d9e047f9594786ea6b9c2db0a4f, type: 3}
+  rifleSprite: {fileID: 2102335526, guid: c154c617201fa5746917d58debdb4df1, type: 3}
+  freezeThreeSprite: {fileID: 1690086838, guid: c154c617201fa5746917d58debdb4df1, type: 3}
   weaponDisplay: {fileID: 0}
   playerWeaponRenderer: {fileID: 1263500948697017331}
   checkInterval: 1
@@ -226,11 +228,17 @@ MonoBehaviour:
   Sammo: 2
   Bammo: 7
   Lammo: 8
+  Rammo: 30
+  Frammo: 3
   PammoMax: 5
   SammoMax: 3
   BammoMax: 7
   LammoMax: 9
+  RammoMax: 60
+  FrammoMax: 3
   normalProjectilePrefab: {fileID: 6815579030488834856, guid: 428512f50db5b274792747bc9f903bfd, type: 3}
   fireProjectilePrefab: {fileID: 6815579030488834856, guid: 54bcf9b30227b954aa42a62a193d70e2, type: 3}
   iceProjectilePrefab: {fileID: 6815579030488834856, guid: 0224fa52997e4c8438dfeca256d1325f, type: 3}
   laserProjectilePrefab: {fileID: 6815579030488834856, guid: 5a36747bb82a1c9499800aa3c83a09f7, type: 3}
+  rifleProjectilePrefab: {fileID: 6815579030488834856, guid: 5a36747bb82a1c9499800aa3c83a09f7, type: 3}
+  freezeProjectilePrefab: {fileID: 3268721148448663123, guid: d3fb889ed33344a4798a1e3bad6bed73, type: 3}
