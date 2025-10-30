@@ -462,7 +462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5430068622383266173, guid: 99b3cebbf47ec434b91bc438ed8ad9ea, type: 3}
       propertyPath: startingCurrency
-      value: 10000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6853901693272187831, guid: 99b3cebbf47ec434b91bc438ed8ad9ea, type: 3}
       propertyPath: m_Camera

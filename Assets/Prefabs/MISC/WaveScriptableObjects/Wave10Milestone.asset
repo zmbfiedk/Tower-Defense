@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ca4272f0082504094d32f1a1cef368, type: 3}
   m_Name: Wave10Milestone
   m_EditorClassIdentifier: 
-  waveNumber: 10
-  healthMultiplier: 1.25
-  speedMultiplier: 1.05
+  waveNumber: 2
+  healthMultiplier: 0.75
+  speedMultiplier: 0.95
   damageMultiplier: 2
   spawnRateMultiplier: 1
   unlockHealer: 1

@@ -44,9 +44,16 @@ public class TowerDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         if (!previewTower) return;
 
         TowerPlacementManager.Instance.TryPlaceTower(previewTower);
+
+        // Reset visuals after placement
+        if (previewScript != null)
+            previewScript.OnPlaced();
+
         previewTower = null;
         previewScript = null;
     }
+
+
 
     private Vector3 GetMouseWorldPos(PointerEventData eventData)
     {

@@ -216,5 +216,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac1fdb668b79a541b6099aeaa9d7f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
+  radius: 1.5
   segments: 50

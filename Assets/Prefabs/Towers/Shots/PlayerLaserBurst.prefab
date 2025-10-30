@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6032360307170991176}
   - component: {fileID: 3308199748479838570}
   m_Layer: 0
-  m_Name: SingleShot proj
+  m_Name: PlayerLaserBurst
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1baa44eab05d3c40a2aa1e52c456470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0.375
+  damage: 0.15
 --- !u!50 &6032360307170991176
 Rigidbody2D:
   serializedVersion: 4

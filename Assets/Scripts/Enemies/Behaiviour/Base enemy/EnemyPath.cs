@@ -47,4 +47,24 @@ public class EnemyPath : MonoBehaviour
         if (multiplier <= 0f) multiplier = 1f;
         speed = baseSpeed * multiplier;
     }
+
+    public float GetTravelProgress()
+    {
+        if (patrolPoints == null || patrolPoints.Length < 2) return 0f;
+
+        float totalDistance = 0f;
+        for (int i = 0; i < patrolPoints.Length - 1; i++)
+            totalDistance += Vector3.Distance(patrolPoints[i].position, patrolPoints[i + 1].position);
+
+        float traveledDistance = 0f;
+        for (int i = 1; i < currentTargetIndex && i < patrolPoints.Length; i++)
+            traveledDistance += Vector3.Distance(patrolPoints[i - 1].position, patrolPoints[i].position);
+
+        // add partial distance to next point
+        if (currentTargetIndex < patrolPoints.Length)
+            traveledDistance += Vector3.Distance(transform.position, patrolPoints[currentTargetIndex].position) / 2f;
+
+        return Mathf.Clamp01(traveledDistance / totalDistance);
+    }
+
 }

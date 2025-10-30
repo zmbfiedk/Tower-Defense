@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyHealth))]
@@ -14,6 +13,7 @@ public class EnemyScaler : MonoBehaviour
     {
         enemyHealth = GetComponent<EnemyHealth>();
         enemyPath = GetComponent<EnemyPath>();
+
         baseMaxHealth = enemyHealth != null ? enemyHealth.GetBaseMaxHealth() : 1f;
         baseSpeed = enemyPath != null ? enemyPath.Speed : 1f;
     }
@@ -37,18 +37,17 @@ public class EnemyScaler : MonoBehaviour
         }
     }
 
-    private void OnDifficultyChanged(DifficultyState state)
+    private void OnDifficultyChanged(WaveDifficultyManager.DifficultyState state)
     {
         ApplyState(state);
     }
 
-    private void ApplyState(DifficultyState state)
+    private void ApplyState(WaveDifficultyManager.DifficultyState state)
     {
         if (enemyHealth != null)
             enemyHealth.ApplyHealthMultiplier(state.healthMultiplier);
 
         if (enemyPath != null)
             enemyPath.ApplySpeedMultiplier(state.speedMultiplier);
-
     }
 }

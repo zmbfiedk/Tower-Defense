@@ -236,9 +236,9 @@ MonoBehaviour:
   LammoMax: 9
   RammoMax: 60
   FrammoMax: 3
-  normalProjectilePrefab: {fileID: 6815579030488834856, guid: 428512f50db5b274792747bc9f903bfd, type: 3}
-  fireProjectilePrefab: {fileID: 6815579030488834856, guid: 54bcf9b30227b954aa42a62a193d70e2, type: 3}
-  iceProjectilePrefab: {fileID: 6815579030488834856, guid: 0224fa52997e4c8438dfeca256d1325f, type: 3}
-  laserProjectilePrefab: {fileID: 6815579030488834856, guid: 5a36747bb82a1c9499800aa3c83a09f7, type: 3}
-  rifleProjectilePrefab: {fileID: 6815579030488834856, guid: 5a36747bb82a1c9499800aa3c83a09f7, type: 3}
+  normalProjectilePrefab: {fileID: 6815579030488834856, guid: e91b9b3160b1d9a4599f45eadae44e0f, type: 3}
+  fireProjectilePrefab: {fileID: 6815579030488834856, guid: ff2c297fdbdee6b42aed1339f35742c2, type: 3}
+  iceProjectilePrefab: {fileID: 6815579030488834856, guid: bea35081e0c2a974094735a175feff93, type: 3}
+  laserProjectilePrefab: {fileID: 6815579030488834856, guid: 075a21fc0788dd149a13e20f927da14d, type: 3}
+  rifleProjectilePrefab: {fileID: 6815579030488834856, guid: bea35081e0c2a974094735a175feff93, type: 3}
   freezeProjectilePrefab: {fileID: 3268721148448663123, guid: d3fb889ed33344a4798a1e3bad6bed73, type: 3}

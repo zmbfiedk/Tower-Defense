@@ -1,39 +1,51 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-
-public struct DifficultyState
-{
-    public float healthMultiplier;
-    public float speedMultiplier;
-    public float damageMultiplier;
-    public float spawnRateMultiplier;
-}
 
 [DefaultExecutionOrder(-50)]
 public class WaveDifficultyManager : MonoBehaviour
 {
+    public struct DifficultyState
+    {
+        public float healthMultiplier;
+        public float speedMultiplier;
+        public float damageMultiplier;
+        public float spawnRateMultiplier;
+    }
+
+    // Singleton instance
     public static WaveDifficultyManager Instance { get; private set; }
 
-    // Broadcast when difficulty changes
+    // Event triggered when difficulty changes
     public static event Action<DifficultyState> OnDifficultyChanged;
 
-    [Header("Milestones (ordered)")]
-    [SerializeField] private List<WaveMilestone> milestones = new List<WaveMilestone>();
+    [Header("Base Scaling Rates")]
+    [SerializeField] private float waveGrowthRate = 0.05f;       // 5% harder each wave
+    [SerializeField] private float distanceEaseFactor = 0.05f;   // 5% easier if enemies reach end
+    [SerializeField] private float distanceHardFactor = 0.05f;   // 5% harder if they die early
+
+    [Header("Clamp Values")]
+    [SerializeField] private float maxMultiplier = 5f;
+    [SerializeField] private float minMultiplier = 0.5f;
 
     private DifficultyState currentState;
 
-    // internal multipliers start at 1
     private float accumulatedHealth = 1f;
     private float accumulatedSpeed = 1f;
     private float accumulatedDamage = 1f;
     private float accumulatedSpawnRate = 1f;
 
     private EnemySpawner spawner;
+    private int lastWaveNumber = 0;
 
+    // ──────────────────────────────
     private void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
 
         currentState = new DifficultyState
@@ -50,30 +62,52 @@ public class WaveDifficultyManager : MonoBehaviour
     private void OnEnable()
     {
         WaveChecker.On10WavesCompleted += Handle10WavesCompleted;
+        EnemyEvents.OnEnemyDeathWithDistance += HandleEnemyDeathFeedback;
     }
 
     private void OnDisable()
     {
         WaveChecker.On10WavesCompleted -= Handle10WavesCompleted;
+        EnemyEvents.OnEnemyDeathWithDistance -= HandleEnemyDeathFeedback;
     }
 
+    // ──────────────────────────────
     private void Handle10WavesCompleted(int waveNumber)
     {
-        // Find milestones exactly matching the triggered waveNumber
-        foreach (var m in milestones)
-        {
-            if (m == null) continue;
-            if (m.waveNumber == waveNumber)
-                ApplyMilestone(m);
-        }
+        int waveDelta = waveNumber - lastWaveNumber;
+        accumulatedHealth *= 1 + (waveDelta * waveGrowthRate);
+        accumulatedSpeed *= 1 + (waveDelta * waveGrowthRate / 2);
+        accumulatedDamage *= 1 + (waveDelta * waveGrowthRate);
+        accumulatedSpawnRate *= 1 + (waveDelta * waveGrowthRate / 3);
+
+        lastWaveNumber = waveNumber;
+        ApplyState();
     }
 
-    private void ApplyMilestone(WaveMilestone m)
+    private void HandleEnemyDeathFeedback(float travelPercent)
     {
-        accumulatedHealth *= m.healthMultiplier;
-        accumulatedSpeed *= m.speedMultiplier;
-        accumulatedDamage *= m.damageMultiplier;
-        accumulatedSpawnRate *= m.spawnRateMultiplier;
+        // travelPercent = 0 (dies early) → too easy
+        // travelPercent = 1 (reaches end) → too hard
+
+        if (travelPercent < 0.3f)
+        {
+            accumulatedHealth *= 1 + distanceHardFactor;
+            accumulatedSpeed *= 1 + distanceHardFactor;
+        }
+        else if (travelPercent > 0.8f)
+        {
+            accumulatedHealth *= 1 - distanceEaseFactor;
+            accumulatedSpeed *= 1 - distanceEaseFactor;
+        }
+
+        ClampMultipliers();
+        ApplyState();
+    }
+
+    // ──────────────────────────────
+    private void ApplyState()
+    {
+        ClampMultipliers();
 
         currentState.healthMultiplier = accumulatedHealth;
         currentState.speedMultiplier = accumulatedSpeed;
@@ -83,19 +117,22 @@ public class WaveDifficultyManager : MonoBehaviour
         OnDifficultyChanged?.Invoke(currentState);
 
         if (spawner != null)
-        {
-
             spawner.SetSpawnTimeMultiplier(currentState.spawnRateMultiplier);
 
-            if (m.unlockHealer) spawner.UnlockHealer();
-            if (m.unlockInvisible) spawner.UnlockInvisible();
-            if (m.unlockNewEnemy && m.newEnemyPrefab != null) spawner.AddEnemyPrefabToPool(m.newEnemyPrefab);
-        }
-
-        Debug.Log($"[WaveDifficultyManager] Applied milestone for wave {m.waveNumber}. " +
-                  $"H:{currentState.healthMultiplier} S:{currentState.speedMultiplier} D:{currentState.damageMultiplier} SR:{currentState.spawnRateMultiplier}");
+        Debug.Log($"[WaveDifficultyManager] Difficulty updated → " +
+                  $"Health:{currentState.healthMultiplier:F2}, " +
+                  $"Speed:{currentState.speedMultiplier:F2}, " +
+                  $"Damage:{currentState.damageMultiplier:F2}, " +
+                  $"Spawn:{currentState.spawnRateMultiplier:F2}");
     }
 
-    // Public getter for manual queries
+    private void ClampMultipliers()
+    {
+        accumulatedHealth = Mathf.Clamp(accumulatedHealth, minMultiplier, maxMultiplier);
+        accumulatedSpeed = Mathf.Clamp(accumulatedSpeed, minMultiplier, maxMultiplier);
+        accumulatedDamage = Mathf.Clamp(accumulatedDamage, minMultiplier, maxMultiplier);
+        accumulatedSpawnRate = Mathf.Clamp(accumulatedSpawnRate, minMultiplier, maxMultiplier);
+    }
+
     public DifficultyState GetCurrentState() => currentState;
 }

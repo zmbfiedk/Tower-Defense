@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ca4272f0082504094d32f1a1cef368, type: 3}
   m_Name: Wave30MileStone
   m_EditorClassIdentifier: 
-  waveNumber: 30
+  waveNumber: 6
   healthMultiplier: 1.5
   speedMultiplier: 1.1
   damageMultiplier: 1
