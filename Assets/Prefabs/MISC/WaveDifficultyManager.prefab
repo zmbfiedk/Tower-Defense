@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 746f0689b6ff50b448948dae4e27df0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  milestones:
-  - {fileID: 11400000, guid: b3b8f0a5fcc030f4a914f5c54b28519d, type: 2}
-  - {fileID: 11400000, guid: 1147384a4eb34e34ea3137cd32316b40, type: 2}
-  - {fileID: 11400000, guid: 5ddec69bf781d7d4f829d5d90c81ddad, type: 2}
-  - {fileID: 11400000, guid: 23b095290796a5943bd3744f31d8494b, type: 2}
+  waveGrowthRate: 0.05
+  distanceEaseFactor: 0.05
+  distanceHardFactor: 0.05
+  maxMultiplier: 5
+  minMultiplier: 0.5

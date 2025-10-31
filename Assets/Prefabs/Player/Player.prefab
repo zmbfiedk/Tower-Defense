@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5308886891445353265}
   - component: {fileID: 8505751182162698159}
   - component: {fileID: 1397176837438502495}
+  - component: {fileID: 5168894289666252196}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -35,7 +36,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -360,3 +361,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5168894289666252196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7271743816004270914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90724f44c88acb4ba0e67ea238ba7ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveThreshold: 0.02
+  wobbleCooldown: 0.08
+  wobbleDuration: 0.35
+  wobbleRotationZ: 12
+  wobbleScalePunch: {x: 0.06, y: 0.04, z: 0}
+  wobbleVibrato: 10
+  wobbleElasticity: 0.493
+  cameraTransform: {fileID: 0}
+  cameraShakeDuration: 0.18
+  cameraShakeStrength: 0.25
+  cameraShakeVibrato: 14
+  cameraShakeFadeOut: 1

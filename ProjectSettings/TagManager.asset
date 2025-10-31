@@ -14,6 +14,10 @@ TagManager:
   - Currency manager
   - Boss
   - WaveManager
+  - SingleShot
+  - TripleShot
+  - Burst
+  - LazerBurst
   layers:
   - Default
   - TransparentFX

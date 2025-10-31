@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTag: Enemy
   enemiesToKillThisWave: 1
-  waveNumber: 0
+  waveNumber: 1
   enemiesKilled: 0
   waveActive: 1
   bossEnemyAmount: 0
