@@ -11,14 +11,14 @@ GameObject:
   - component: {fileID: 6843820993556134567}
   - component: {fileID: 4199428478817233235}
   - component: {fileID: 8510718379442638631}
-  - component: {fileID: 3647278562027850768}
   - component: {fileID: -4424715459195216705}
   - component: {fileID: 2967126303240621948}
   - component: {fileID: -1854494312102743858}
   - component: {fileID: -4065294692158089203}
+  - component: {fileID: -6797984885336374653}
   m_Layer: 0
   m_Name: SingleShot
-  m_TagString: Tower
+  m_TagString: SingleShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +97,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4719798817163162122}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -135,19 +135,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3647278562027850768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4719798817163162122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe35db8bcb95f4c448cb78bae3d08a30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  towerPrice: 50
 --- !u!50 &-4424715459195216705
 Rigidbody2D:
   serializedVersion: 4
@@ -218,3 +205,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 3
   segments: 50
+--- !u!114 &-6797984885336374653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4719798817163162122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe35db8bcb95f4c448cb78bae3d08a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPrice: 50

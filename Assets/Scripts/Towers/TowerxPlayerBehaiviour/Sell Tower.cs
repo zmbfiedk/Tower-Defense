@@ -6,32 +6,66 @@ public class SellTower : MonoBehaviour
     private TowerSpot spot;
     private float lastClickTime;
     private const float doubleClickDelay = 0.3f;
-    [SerializeField] private int towerPrice; // default if not set
+
+    [Header("Tower Settings")]
+    [SerializeField] private int towerPrice = 50; // Already set in prefab
+
     public int TowerPrice => towerPrice;
 
-    public void SetSpot(TowerSpot s) => spot = s;
+    private Camera mainCam;
+    private Collider2D parentCollider;
 
-    public void SetTowerPrice(int price)
+    private void Awake()
     {
-        towerPrice = price;
+        mainCam = Camera.main;
+        parentCollider = GetComponent<Collider2D>();
     }
 
-    private void OnMouseDown()
+    private void Update()
     {
-        if (Time.time - lastClickTime <= doubleClickDelay)
+        if (!Input.GetMouseButtonDown(0)) return;
+
+        // Get mouse position in world
+        Vector2 mouseWorld = mainCam.ScreenToWorldPoint(Input.mousePosition);
+
+        // Check all colliders under the mouse
+        Collider2D[] hits = Physics2D.OverlapPointAll(mouseWorld);
+
+        if (hits == null || hits.Length == 0) return;
+
+        // Only proceed if the parent collider was clicked
+        foreach (var hit in hits)
         {
-            Sell();
+            if (hit == parentCollider)
+            {
+                // Double click check
+                if (Time.time - lastClickTime <= doubleClickDelay)
+                    Sell();
+
+                lastClickTime = Time.time;
+                break;
+            }
         }
-        lastClickTime = Time.time;
     }
 
     private void Sell()
     {
         if (spot != null)
+        {
             spot.RemoveTower();
-        else
-            Destroy(gameObject);
+            spot = null;
+        }
 
+        // Destroy all children (tower visuals)
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            Destroy(transform.GetChild(i).gameObject);
+
+        // Refund half the tower's price
         CurrencyManager.Instance.AddCurrency(towerPrice / 2);
+
+        Debug.Log($"{name} sold for {towerPrice / 2}");
     }
+
+    // Assign spot when placing tower
+    public void SetSpot(TowerSpot s) => spot = s;
 }

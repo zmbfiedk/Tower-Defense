@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 2818971118167659389}
   - component: {fileID: 4108163017713484651}
   - component: {fileID: -2435377564805809976}
-  - component: {fileID: 6458030801031576985}
   - component: {fileID: -2063162681682027371}
   - component: {fileID: 1444372326300148980}
   - component: {fileID: 7237470861760225364}
   - component: {fileID: 1648064249930819625}
+  - component: {fileID: -1292710329663719427}
   m_Layer: 0
   m_Name: Laser Burst
   m_TagString: Tower
@@ -97,7 +97,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3413341225741239609}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -135,19 +135,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.8828125}
   m_EdgeRadius: 0
---- !u!114 &6458030801031576985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3413341225741239609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe35db8bcb95f4c448cb78bae3d08a30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  towerPrice: 200
 --- !u!50 &-2063162681682027371
 Rigidbody2D:
   serializedVersion: 4
@@ -216,5 +203,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac1fdb668b79a541b6099aeaa9d7f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 2
+  radius: 3.6
   segments: 50
+--- !u!114 &-1292710329663719427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413341225741239609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe35db8bcb95f4c448cb78bae3d08a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPrice: 200

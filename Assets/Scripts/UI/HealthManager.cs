@@ -21,7 +21,7 @@ public class HealthManager : MonoBehaviour
     {
         if (playerHealth != null && textMeshPro != null)
         {
-            textMeshPro.text = "HP: " + playerHealth.currenthealth.ToString();
+            textMeshPro.text = playerHealth.currenthealth.ToString();
         }
     }
 }

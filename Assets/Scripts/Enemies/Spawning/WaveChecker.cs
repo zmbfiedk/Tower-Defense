@@ -83,7 +83,7 @@ public class WaveChecker : MonoBehaviour
 
         Debug.Log($"[WaveChecker] Wave {waveNumber} started. Kill {enemiesToKillThisWave} enemies.");
 
-        if (waveNumber % 10 == 0)
+        if (waveNumber % 5 == 0)
         {
             Debug.Log("[WaveChecker] Boss Wave Reached!");
             waveActive = false; // stop normal spawning

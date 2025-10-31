@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerAttackController : MonoBehaviour
 {
     public event Action<float> OnReload; // non-static
+    public event Action<TowerAttackController.TowerType> OnShot; // invoked whenever a shot projectile is spawned
 
     [Header("Attack Settings")]
     [SerializeField] private float fireRate = 10f;
@@ -55,15 +56,14 @@ public class PlayerAttackController : MonoBehaviour
         weaponController = GetComponent<PlayerWeaponController>();
 
         prefabMap = new Dictionary<TowerAttackController.TowerType, GameObject>
-    {
-        { TowerAttackController.TowerType.SingleShot, normalProjectilePrefab },
-        { TowerAttackController.TowerType.TripleShot, fireProjectilePrefab },
-        { TowerAttackController.TowerType.Burst, iceProjectilePrefab },
-        { TowerAttackController.TowerType.LaserBurst, laserProjectilePrefab },
-        { TowerAttackController.TowerType.Rifle, rifleProjectilePrefab },         // new prefab
-        { TowerAttackController.TowerType.FreezeThree, freezeProjectilePrefab }   // new prefab
-    };
-
+        {
+            { TowerAttackController.TowerType.SingleShot, normalProjectilePrefab },
+            { TowerAttackController.TowerType.TripleShot, fireProjectilePrefab },
+            { TowerAttackController.TowerType.Burst, iceProjectilePrefab },
+            { TowerAttackController.TowerType.LaserBurst, laserProjectilePrefab },
+            { TowerAttackController.TowerType.Rifle, rifleProjectilePrefab },
+            { TowerAttackController.TowerType.FreezeThree, freezeProjectilePrefab }
+        };
 
         currentAmmo = new Dictionary<TowerAttackController.TowerType, int>
         {
@@ -85,7 +85,9 @@ public class PlayerAttackController : MonoBehaviour
             { TowerAttackController.TowerType.FreezeThree, FrammoMax }
         };
 
+        // initialize shooter with a default prefab and speed (keep your original constructor usage)
         shooter = new PlayerProjShooter(normalProjectilePrefab, 30f);
+
         foreach (var kv in currentAmmo)
             OnAmmoChanged?.Invoke(kv.Key, kv.Value, maxAmmo[kv.Key]);
     }
@@ -132,15 +134,20 @@ public class PlayerAttackController : MonoBehaviour
             case TowerAttackController.TowerType.SingleShot:
                 shooter.ShootSingle(transform.position, mousePos);
                 DecreaseAmmo(type, 1);
+                OnShot?.Invoke(type); // single shot played once
                 break;
 
             case TowerAttackController.TowerType.TripleShot:
                 shooter.ShootTriple(transform.position, mousePos);
                 DecreaseAmmo(type, 1);
+                OnShot?.Invoke(type); // triple shot: we treat this as one "shot event" (you can change if you want three separate sounds)
                 break;
 
             case TowerAttackController.TowerType.Burst:
-                StartCoroutine(DoBurstShots(type, 3, 0.1f, mousePos));
+
+                shooter.ShootSingle(transform.position, mousePos);
+                DecreaseAmmo(type, 1);
+                OnShot?.Invoke(type); // rifle single-shot event
                 break;
 
             case TowerAttackController.TowerType.LaserBurst:
@@ -148,13 +155,13 @@ public class PlayerAttackController : MonoBehaviour
                 break;
 
             case TowerAttackController.TowerType.Rifle:
-                shooter.ShootSingle(transform.position, mousePos);
-                DecreaseAmmo(type, 1);
+                StartCoroutine(DoBurstShots(type, 3, 0.1f, mousePos));
                 break;
 
             case TowerAttackController.TowerType.FreezeThree:
                 shooter.ShootTriple(transform.position, mousePos);
                 DecreaseAmmo(type, 1);
+                OnShot?.Invoke(type); // freeze triple treated like triple shot
                 break;
         }
     }
@@ -168,6 +175,7 @@ public class PlayerAttackController : MonoBehaviour
 
             shooter.ShootSingle(transform.position, targetPos);
             DecreaseAmmo(type, 1);
+            OnShot?.Invoke(type); // invoke for each sub-shot of the burst
             yield return new WaitForSeconds(delay);
         }
     }
