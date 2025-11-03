@@ -185,4 +185,27 @@ Wat ik vermijd: te veel grind of repetitieve strategieën — mijn unieke featur
 
 ## 14.  Video
 
+## 15. Dependencies
+Enemy:
+Enemy Path -> Enemy PathMaker 
+Enemy Path -> Enemy Events
+Enemy Path -> Enemy EndPointDamage
+Enemy Events -> bijna alle enemy scripts
+Enemy Reward -> Enemy Health
+Enemy Healer -> Alle base enemy scripts
+Enemy Healer -> Heal Area.cs
+Enemy Scaler -> EnemyPath + EnemyHealth + WaveDifficultyManager
+Enemy Spawner -> WaveManager
+Wave Manager -> Enemy Spawner
+Player:
+Player Attack Controller -> PlayerWeaponController + PlayerprojShooter + TowerAttackController
+Player Weapon Controller -> TowerAttackController
+Tower:
+TowerAttackController -> TowerProjShooter + EnemyFinder + Rotating Movement
+SellTower -> CurrencyManager
+TowerDragHandler -> TowerPlacementManager + TowerFactory + TowerPrievw
+UI:
+Original Script wich is showing
+
+
 
