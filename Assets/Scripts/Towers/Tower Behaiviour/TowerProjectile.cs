@@ -26,5 +26,6 @@ public class TowerProjectile : MonoBehaviour
             enemyHealth.TakeDamage(damage);
             Destroy(gameObject);
         }
+
     }
 }
