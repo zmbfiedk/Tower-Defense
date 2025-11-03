@@ -217,4 +217,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe35db8bcb95f4c448cb78bae3d08a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerPrice: 200
+  towerPrice: 300

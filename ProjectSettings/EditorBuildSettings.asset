@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main DEBUG/Level 1 Demo.unity
     guid: 407ab8d04aa2697478516e4dbec2ebb0
+  - enabled: 1
+    path: Assets/Scenes/Main DEBUG/GameOver.unity
+    guid: 3c732fb446fdcf2488793c7e51117673
   m_configObjects: {}

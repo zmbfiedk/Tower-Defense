@@ -4,12 +4,13 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 10f;
-    private float currentHealth;
+    [SerializeField] private GameObject healthBarPrefab; // assign prefab in inspector
 
+    private float currentHealth;
+    private float baseMaxHealth;
     private EnemyEvents enemyEvents;
 
-    // store base so multipliers are relative to original prefab value
-    private float baseMaxHealth;
+    private EnemyHealthBar healthBar;
 
     private void Awake()
     {
@@ -18,18 +19,32 @@ public class EnemyHealth : MonoBehaviour
         enemyEvents = GetComponent<EnemyEvents>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        // If there are legacy listeners of WaveChecker.On10WavesCompleted, they must be removed/updated.
+        if (healthBarPrefab != null)
+        {
+            // Instantiate the health bar and make it follow this enemy
+            GameObject barObj = Instantiate(healthBarPrefab);
+            healthBar = barObj.GetComponent<EnemyHealthBar>();
+            healthBar.Initialize(transform);
+            healthBar.UpdateHealth(currentHealth, maxHealth);
+        }
     }
 
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
+        currentHealth = Mathf.Max(currentHealth, 0f);
+
+        if (healthBar != null)
+            healthBar.UpdateHealth(currentHealth, maxHealth);
 
         if (currentHealth <= 0f)
         {
             enemyEvents.Die();
+
+            if (healthBar != null)
+                Destroy(healthBar.gameObject);
         }
     }
 
@@ -39,7 +54,6 @@ public class EnemyHealth : MonoBehaviour
         float oldMax = maxHealth;
         maxHealth = baseMaxHealth * multiplier;
 
-        // keep same percentage of health after scaling
         if (oldMax > 0f)
         {
             float percent = currentHealth / oldMax;
@@ -50,8 +64,9 @@ public class EnemyHealth : MonoBehaviour
             currentHealth = maxHealth;
         }
 
+        if (healthBar != null)
+            healthBar.UpdateHealth(currentHealth, maxHealth);
     }
 
-    // public getter for EnemyScaler
     public float GetBaseMaxHealth() => baseMaxHealth;
 }
