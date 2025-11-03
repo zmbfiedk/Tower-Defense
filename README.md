@@ -180,32 +180,6 @@ Wat ik vermijd: te veel grind of repetitieve strategieën — mijn unieke featur
 
 
 
-## 13. Dependencies
-Enemy:
-Enemy Path -> Enemy PathMaker 
-Enemy Path -> Enemy Events
-Enemy Path -> Enemy EndPointDamage
-Enemy Events -> bijna alle enemy scripts
-Enemy Reward -> Enemy Health
-Enemy Healer -> Alle base enemy scripts
-Enemy Healer -> Heal Area.cs
-Enemy Scaler -> EnemyPath + EnemyHealth + WaveDifficultyManager
-Enemy Spawner -> WaveManager
-Wave Manager -> Enemy Spawner
-Player:
-Player Attack Controller -> PlayerWeaponController + PlayerprojShooter + TowerAttackController
-Player Weapon Controller -> TowerAttackController
-Tower:
-TowerAttackController -> TowerProjShooter + EnemyFinder + Rotating Movement
-SellTower -> CurrencyManager
-TowerDragHandler -> TowerPlacementManager + TowerFactory + TowerPrievw
-UI:
-Original Script wich is showing
-
-### 12. Trello
-[Trello](https://trello.com/invite/b/68be86f11b0fd1599436af44/ATTI4fae26223c69d7fe3d588c43749edded7E21C96A/towerdefense)
-
-
 ## 13. Game Design Document
 ![Gameplay Loop Sketch](imagesforreadme/Image3.png)  
 
