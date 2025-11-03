@@ -21,7 +21,7 @@ Most tower defense games let players pick a "meta" and stick with it. In my game
 ## 3. Schets van je level en UI  
 Hier voeg je schetsen of mockups in van je level, UI en HUD.  
 
-![Level Sketch](imagesforreadme/Image2.png)  
+![Level Sketch](imagesforreadme/image2.png)  
 
 ---
 
@@ -62,7 +62,7 @@ Hier voeg je schetsen of mockups in van je level, UI en HUD.
 - Every 10 waves: **mandatory tower swap** (player chooses new loadout).  
 - Survive as long as possible.  
 
-![Gameplay Loop Sketch](imagesforreadme/Image1.png)  
+![Gameplay Loop Sketch](imagesforreadme/image1.png)  
 
 ---
 
