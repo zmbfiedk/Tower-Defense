@@ -3,7 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - SpawnPoint
+  - Point
+  - EndPoint
+  - TowerPlacement
+  - Tower
+  - Bullet
+  - Currency manager
+  - Boss
+  - WaveManager
+  - SingleShot
+  - TripleShot
+  - Burst
+  - LazerBurst
   layers:
   - Default
   - TransparentFX
