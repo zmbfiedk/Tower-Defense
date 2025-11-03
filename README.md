@@ -176,5 +176,13 @@ Wat ik vermijd: te veel grind of repetitieve strategieën — mijn unieke featur
 - **Acceptatie:** Speler ziet altijd zijn geld, levens en huidige wave duidelijk in beeld.  
 
 
-### 12???
+### 12. Trello
 [Trello](https://trello.com/invite/b/68be86f11b0fd1599436af44/ATTI4fae26223c69d7fe3d588c43749edded7E21C96A/towerdefense)
+
+
+## 13. Game Design Document
+![Gameplay Loop Sketch](imagesforreadme/Image3.png)  
+
+## 14.  Video
+
+
