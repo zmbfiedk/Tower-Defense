@@ -209,7 +209,11 @@ Original Script wich is showing
 ## 13. Game Design Document
 ![Gameplay Loop Sketch](imagesforreadme/Image3.png)  
 
-## 14.  Video
+## 14. Video
+
+Watch the gameplay video on YouTube:  
+[Dragon Defense Gameplay](https://www.youtube.com/watch?v=xlR9lBvwiQA)
+
 
 ## 15. Dependencies
 Enemy:

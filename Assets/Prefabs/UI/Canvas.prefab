@@ -1023,6 +1023,7 @@ GameObject:
   - component: {fileID: 3026131961440725278}
   - component: {fileID: 7568078293307141798}
   - component: {fileID: 1505332144586143925}
+  - component: {fileID: 5654720269331059234}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Currency manager
@@ -1135,7 +1136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7c5cf162077f724a95b19c438e1b62b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingCurrency: 500
+  startingCurrency: 100
   currencyTextTMP: {fileID: 7232527913520029769}
   currencyText: {fileID: 0}
 --- !u!114 &3026131961440725278
@@ -1181,6 +1182,18 @@ MonoBehaviour:
   playerAttack: {fileID: 0}
   playerWeapon: {fileID: 0}
   ammoText: {fileID: 2158649060934291994}
+--- !u!114 &5654720269331059234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3681699969029508860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073983452038e1142a44f166e89d6fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4033312381289758201
 GameObject:
   m_ObjectHideFlags: 0
@@ -2021,7 +2034,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '200
+  m_text: '300
+
 
 '
   m_isRightToLeft: 0

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class ReloadAllScenes : MonoBehaviour
 {
@@ -7,19 +8,24 @@ public class ReloadAllScenes : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            ReloadScenes();
+            StartCoroutine(ReloadAll());
         }
     }
 
-    private void ReloadScenes()
+    private IEnumerator ReloadAll()
     {
         int sceneCount = SceneManager.sceneCount;
         for (int i = sceneCount - 1; i >= 0; i--)
         {
             Scene loadedScene = SceneManager.GetSceneAt(i);
-            SceneManager.UnloadSceneAsync(loadedScene);
+            yield return SceneManager.UnloadSceneAsync(loadedScene);
         }
 
-        SceneManager.LoadScene(0);
+        yield return SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
+
+        yield return SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+
+        Debug.Log("Scenes 0 and 1 reloaded successfully!");
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(0));
     }
 }
