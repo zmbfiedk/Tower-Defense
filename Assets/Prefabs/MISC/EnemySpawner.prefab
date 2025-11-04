@@ -173,4 +173,4 @@ MonoBehaviour:
   bossMusic: {fileID: 8300000, guid: 88321e68073d2a946960f52f2ef74280, type: 3}
   initialVolume: 1
   crossfadeDuration: 1
-  persistAcrossScenes: 1
+  persistAcrossScenes: 0

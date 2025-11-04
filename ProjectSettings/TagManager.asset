@@ -18,6 +18,7 @@ TagManager:
   - TripleShot
   - Burst
   - LazerBurst
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

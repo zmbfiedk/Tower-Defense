@@ -33,7 +33,6 @@ public class CurrencyManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         CurrentCurrency = startingCurrency;
     }

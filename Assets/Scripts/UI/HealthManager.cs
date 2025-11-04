@@ -5,15 +5,19 @@ public class HealthManager : MonoBehaviour
 {
     private PlayerHealth playerHealth;
 
-    [SerializeField] private TextMeshProUGUI textMeshPro; 
+    [SerializeField] private TextMeshProUGUI textMeshPro;
 
     private void Start()
     {
-        // Find player by tag
-        GameObject healthObj = GameObject.FindWithTag("MainCamera");
-        if (healthObj != null)
+        // Find the player object by tag (make sure the player has the tag "Player")
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
         {
-            playerHealth = healthObj.GetComponent<PlayerHealth>();
+            playerHealth = playerObj.GetComponent<PlayerHealth>();
+        }
+        else
+        {
+            Debug.LogWarning("PlayerHealth not found! Make sure the player is tagged 'Player'.");
         }
     }
 
@@ -21,7 +25,7 @@ public class HealthManager : MonoBehaviour
     {
         if (playerHealth != null && textMeshPro != null)
         {
-            textMeshPro.text = playerHealth.currenthealth.ToString();
+            textMeshPro.text = playerHealth.CurrentHealth.ToString();
         }
     }
 }
