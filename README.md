@@ -190,26 +190,106 @@ Watch the gameplay video on YouTube:
 
 
 ## 15. Dependencies
-Enemy:
-Enemy Path -> Enemy PathMaker 
-Enemy Path -> Enemy Events
-Enemy Path -> Enemy EndPointDamage
-Enemy Events -> bijna alle enemy scripts
-Enemy Reward -> Enemy Health
-Enemy Healer -> Alle base enemy scripts
-Enemy Healer -> Heal Area.cs
-Enemy Scaler -> EnemyPath + EnemyHealth + WaveDifficultyManager
-Enemy Spawner -> WaveManager
-Wave Manager -> Enemy Spawner
-Player:
-Player Attack Controller -> PlayerWeaponController + PlayerprojShooter + TowerAttackController
-Player Weapon Controller -> TowerAttackController
-Tower:
-TowerAttackController -> TowerProjShooter + EnemyFinder + Rotating Movement
-SellTower -> CurrencyManager
-TowerDragHandler -> TowerPlacementManager + TowerFactory + TowerPrievw
-UI:
-Original Script wich is showing
+
+# Player Dependencies
+
+PlayerAttackController  >  PlayerWeaponController  (read State: WeaponType)  
+PlayerAttackController  >  PlayerProjShooter  (call Function: ShootProjectile)  
+PlayerAttackController  >  PlayerSound  (trigger Event: OnShot)  
+PlayerAttackController  >  DoTweenPlayerAnimation  (trigger Event: OnShot)  
+PlayerAttackController  >  PlayerAmmoUI  (trigger Event: OnAmmoChanged)  
+
+PlayerWeaponController  >  TowerAttackController  (read State: TowerType)  
+PlayerWeaponController  >  SpriteRenderer  (write Property: sprite)  
+
+PlayerProjShooter  >  Rigidbody2D  (write Velocity Vector2)  
+
+Move  >  Rigidbody2D  (write Velocity Vector2)  
+PlayerDirectionFollowMouse  >  Camera.main  (read Method: ScreenToWorldPoint)  
+
+PlayerHealth  >  SceneManager  (call Function: ReloadScene / DestroyOnDeath)  
+PauseSystem  >  Time.timeScale  (read/write Float)
+
+
+# Tower Dependencies
+
+TowerAttackController  >  RotatingMovement  (call Functions: SetOrbitPosition, UpdateRadius)  
+TowerAttackController  >  ProjectileShooter  (call Function: FireProjectile)  
+TowerAttackController  >  TowerType  (read Enum: TowerType)  
+
+ProjectileShooter  >  Rigidbody2D  (write Velocity Vector2)  
+ProjectileShooter  >  EnemyFinder  (call Function: GetNearestTarget)  
+
+TowerProjectile  >  EnemyHealth  (call Function: TakeDamage(Float))  
+
+SellTower  >  TowerSpot  (call Function: RemoveTower)  
+SellTower  >  CurrencyManager  (call Function: AddCurrency(Int))  
+
+TowerPlacementManager  >  TowerSpot  (read/write Function: FindValidSpot, AssignTower)  
+TowerPlacementManager  >  TowerFactory  (call Function: FinalizePlacement)  
+TowerPlacementManager  >  CurrencyManager  (call Function: SpendCurrency(Int))  
+
+TowerDragHandler  >  TowerFactory  (call Function: CreatePreview)  
+TowerDragHandler  >  TowerPlacementManager  (call Functions: ValidateSpot, PlaceTower)  
+
+TowerFactory  >  TowerPreview  (write Visual State)  
+TowerFactory  >  Collider2D + MonoBehaviour  (toggle Enabled State)  
+
+TowerPreview  >  LineRenderer  (draw Circle / write Points Array)  
+TowerSpot  >  SellTower  (assign Reference)
+
+
+# UI & Managers
+
+CurrencyManager > Currency UI (read/write TextMeshProUGUI / Text Value Int)
+
+HealthManager > PlayerHealth (read Float: CurrentHealth)
+
+ReloadBarUI > PlayerAttackController (subscribe Event: OnReload, read Float: ReloadTime)
+
+UiWave > WaveChecker (read Int: WaveNumber, subscribe Events)
+
+
+# Scene & Music Systems
+
+RespawnableToggle > SceneToggleManager (register/unregister Functions, read Scene State)
+
+SceneToggleManager > RespawnableToggle (call Function: HandleSceneChange)
+
+MusicManager > WaveChecker / EnemyEvents (subscribe Events, read AudioClip References)
+
+NextSceneButton > SceneManager (call Function: LoadNextScene)
+
+ReloadAllScenes > SceneManager (call Functions: UnloadSceneAsync, LoadSceneAsync)
+
+
+# Enemy & Wave System
+
+EnemyPath > EndPointDamage / EnemyHealth / EnemyScaler (trigger Events, read/write Float: Speed)
+
+EnemyEvents > EnemyHealth / EnemyReward / WaveChecker / WaveDifficultyManager (invoke Events, read/write States)
+
+EnemyHealth > EnemyHealthBar / EnemyEvents (read/write Float: CurrentHealth, trigger Events)
+
+EnemyReward > CurrencyManager (call Function: AddCurrency(Int))
+
+EnemyScaler > EnemyHealth / EnemyPath / WaveDifficultyManager (read/write Float: ScaleFactor, Speed, Health)
+
+EnemySpawner > PathBuilder / WaveChecker / WaveDifficultyManager (call Functions: SpawnWave, GetWaveData)
+
+WaveChecker > EnemySpawner / EnemyEvents / CurrencyManager (read/write Int: WaveNumber, subscribe Events)
+
+WaveDifficultyManager > EnemySpawner / EnemyScaler / EnemyEvents / WaveChecker (read/write Float: DifficultyMultiplier)
+
+HealArea > EnemyHealth (read/write Float: HealAmount)
+
+EnemyHealer > HealArea (call Function: HealNearby)
+
+EndPointDamage > PlayerHealth / EnemyPath / EnemyEvents (call Function: TakeDamage, trigger Event: OnReachedEnd)
+
+PathBuilder > EnemyPath (call Function: SetPath)
+
+
 
 
 
