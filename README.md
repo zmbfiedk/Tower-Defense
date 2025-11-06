@@ -291,5 +291,233 @@ PathBuilder > EnemyPath (call Function: SetPath)
 
 
 
+---
+
+## 15.Class Diagrams
+# 🧩 Class Diagrams
+
+This document contains class diagrams (in Mermaid format) for all systems in the project.
+
+```mermaid
+classDiagram
+    class PlayerAttackController {
+        - weaponController : PlayerWeaponController
+        - projShooter : PlayerProjShooter
+        - playerSound : PlayerSound
+        - playerAnim : DoTweenPlayerAnimation
+        - ammoUI : PlayerAmmoUI
+        + OnShot : Event
+        + OnAmmoChanged : Event
+        + Shoot()
+        + Reload()
+    }
+
+    class PlayerWeaponController {
+        - towerAttack : TowerAttackController
+        - spriteRenderer : SpriteRenderer
+        + WeaponType : Enum
+        + SwitchWeapon()
+    }
+
+    class PlayerProjShooter {
+        - rb : Rigidbody2D
+        + ShootProjectile()
+    }
+
+    class Move {
+        - rb : Rigidbody2D
+        + MovePlayer()
+    }
+
+    class PlayerDirectionFollowMouse {
+        - cam : Camera
+        + UpdateRotation()
+    }
+
+    class PlayerHealth {
+        + CurrentHealth : float
+        + TakeDamage(amount : float)
+        - Die()
+    }
+
+    class PauseSystem {
+        - isPaused : bool
+        - pauseMenuUI : GameObject
+        + PauseGame()
+        + ResumeGame()
+    }
+classDiagram
+    class TowerAttackController {
+        - rotator : RotatingMovement
+        - shooter : ProjectileShooter
+        + towerType : Enum
+        + AttackTarget()
+    }
+
+    class ProjectileShooter {
+        - rb : Rigidbody2D
+        - finder : EnemyFinder
+        + FireProjectile()
+    }
+
+    class TowerProjectile {
+        - damage : float
+        + OnCollisionEnter2D(collision : Collision2D)
+    }
+
+    class SellTower {
+        - towerSpot : TowerSpot
+        - currencyManager : CurrencyManager
+        + Sell()
+    }
+
+    class TowerPlacementManager {
+        - towerSpot : TowerSpot
+        - towerFactory : TowerFactory
+        - currencyManager : CurrencyManager
+        + TryPlaceTower()
+    }
+
+    class TowerDragHandler {
+        - towerFactory : TowerFactory
+        - towerPlacementManager : TowerPlacementManager
+        + StartDrag()
+        + DropTower()
+    }
+
+    class TowerFactory {
+        - preview : TowerPreview
+        - colliders : Collider2D[]
+        + CreateTower()
+    }
+
+    class TowerPreview {
+        - lineRenderer : LineRenderer
+        + DrawRange(radius : float)
+    }
+
+    class TowerSpot {
+        - sellTower : SellTower
+        + AssignSpot()
+    }
+classDiagram
+    class CurrencyManager {
+        + static Instance : CurrencyManager
+        - startingCurrency : int
+        - currentCurrency : int
+        - currencyTextTMP : TextMeshProUGUI
+        - currencyText : Text
+        + AddCurrency(amount : int)
+        + SpendCurrency(amount : int) : bool
+        + SetCurrency(amount : int)
+    }
+
+    class HealthManager {
+        - playerHealth : PlayerHealth
+        - textMeshPro : TextMeshProUGUI
+        + Update()
+    }
+
+    class ReloadBarUI {
+        - reloadSlider : Slider
+        - player : Transform
+        - offset : Vector3
+        + StartReload(reloadTime : float)
+    }
+
+    class UiWave {
+        - waveChecker : WaveChecker
+        - textMeshPro : TextMeshProUGUI
+        + ShowWaveText(wave : int)
+    }
+classDiagram
+    class RespawnableToggle {
+        - originalPosition : Vector3
+        - originalRotation : Quaternion
+        - originalScale : Vector3
+        + HandleSceneChange(enable : bool)
+    }
+
+    class SceneToggleManager {
+        + static Instance : SceneToggleManager
+        - registered : List<RespawnableToggle>
+        + Register(toggle : RespawnableToggle)
+        + Unregister(toggle : RespawnableToggle)
+    }
+
+    class MusicManager {
+        - normalMusic : AudioClip
+        - bossMusic : AudioClip
+        - normalSource : AudioSource
+        - bossSource : AudioSource
+        + PlayNormalMusic()
+        + PlayBossMusic()
+    }
+
+    class NextSceneButton {
+        - nextButton : Button
+        + LoadNextScene()
+    }
+
+    class ReloadAllScenes {
+        + ReloadAll() : IEnumerator
+    }
+classDiagram
+    class EnemyPath {
+        + speed : float
+        + Move()
+        + OnReachedEnd : Event
+    }
+
+    class EnemyEvents {
+        + OnBossDefeated : Event
+        + OnEnemyKilled : Event
+    }
+
+    class EnemyHealth {
+        + CurrentHealth : float
+        + TakeDamage(amount : float)
+        - Die()
+    }
+
+    class EnemyReward {
+        - currencyManager : CurrencyManager
+        + GiveReward()
+    }
+
+    class EnemyScaler {
+        + ScaleStats(multiplier : float)
+    }
+
+    class EnemySpawner {
+        + SpawnWave()
+    }
+
+    class WaveChecker {
+        + WaveNumber : int
+        + OnBossWave : Event
+    }
+
+    class WaveDifficultyManager {
+        + DifficultyMultiplier : float
+    }
+
+    class HealArea {
+        + HealEnemies()
+    }
+
+    class EnemyHealer {
+        - healArea : HealArea
+        + HealNearby()
+    }
+
+    class EndPointDamage {
+        + DamagePlayer()
+    }
+
+    class PathBuilder {
+        + BuildPath()
+    }
+```
 
 
