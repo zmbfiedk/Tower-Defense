@@ -298,7 +298,9 @@ PathBuilder > EnemyPath (call Function: SetPath)
 
 This document contains class diagrams (in Mermaid format) for all systems in the project.
 
-```mermaid
+%% ===========================
+%% 🧍 PLAYER SYSTEM
+%% ===========================
 classDiagram
     class PlayerAttackController {
         - weaponController : PlayerWeaponController
@@ -346,7 +348,10 @@ classDiagram
         + PauseGame()
         + ResumeGame()
     }
-classDiagram
+
+%% ===========================
+%% 🏰 TOWER SYSTEM
+%% ===========================
     class TowerAttackController {
         - rotator : RotatingMovement
         - shooter : ProjectileShooter
@@ -400,7 +405,10 @@ classDiagram
         - sellTower : SellTower
         + AssignSpot()
     }
-classDiagram
+
+%% ===========================
+%% 💰 UI & MANAGERS
+%% ===========================
     class CurrencyManager {
         + static Instance : CurrencyManager
         - startingCurrency : int
@@ -430,7 +438,10 @@ classDiagram
         - textMeshPro : TextMeshProUGUI
         + ShowWaveText(wave : int)
     }
-classDiagram
+
+%% ===========================
+%% 🎵 SCENE & MUSIC SYSTEMS
+%% ===========================
     class RespawnableToggle {
         - originalPosition : Vector3
         - originalRotation : Quaternion
@@ -462,7 +473,10 @@ classDiagram
     class ReloadAllScenes {
         + ReloadAll() : IEnumerator
     }
-classDiagram
+
+%% ===========================
+%% 👾 ENEMY & WAVE SYSTEM
+%% ===========================
     class EnemyPath {
         + speed : float
         + Move()
@@ -518,6 +532,6 @@ classDiagram
     class PathBuilder {
         + BuildPath()
     }
-```
+
 
 
