@@ -300,10 +300,10 @@ This document contains class diagrams (in Mermaid format) for all systems in the
 
 # Game Class Diagram
 
+# Game Class Diagrams
+
+## Player System
 ```mermaid
-%% ===========================
-%% 🧍 PLAYER SYSTEM
-%% ===========================
 classDiagram
     class PlayerAttackController {
         - weaponController : PlayerWeaponController
@@ -351,10 +351,11 @@ classDiagram
         + PauseGame()
         + ResumeGame()
     }
+```
 
-%% ===========================
-%% 🏰 TOWER SYSTEM
-%% ===========================
+```mermaid
+## Towers
+classDiagram
     class TowerAttackController {
         - rotator : RotatingMovement
         - shooter : ProjectileShooter
@@ -408,10 +409,11 @@ classDiagram
         - sellTower : SellTower
         + AssignSpot()
     }
+```
 
-%% ===========================
-%% 💰 UI & MANAGERS
-%% ===========================
+```mermaid
+##UI Managers
+classDiagram
     class CurrencyManager {
         + static Instance : CurrencyManager
         - startingCurrency : int
@@ -441,10 +443,11 @@ classDiagram
         - textMeshPro : TextMeshProUGUI
         + ShowWaveText(wave : int)
     }
+```
 
-%% ===========================
-%% 🎵 SCENE & MUSIC SYSTEMS
-%% ===========================
+```mermaid
+## Scene & Music
+classDiagram
     class RespawnableToggle {
         - originalPosition : Vector3
         - originalRotation : Quaternion
@@ -476,10 +479,11 @@ classDiagram
     class ReloadAllScenes {
         + ReloadAll() : IEnumerator
     }
+```
 
-%% ===========================
-%% 👾 ENEMY & WAVE SYSTEM
-%% ===========================
+```Mermaid
+## Enemy & WaveSystem
+classDiagram
     class EnemyPath {
         + speed : float
         + Move()
