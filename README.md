@@ -482,7 +482,7 @@ classDiagram
 ```
 
 ## Enemy & WaveSystem
-```Mermaid
+```mermaid
 classDiagram
     class EnemyPath {
         + speed : float
