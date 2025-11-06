@@ -298,6 +298,9 @@ PathBuilder > EnemyPath (call Function: SetPath)
 
 This document contains class diagrams (in Mermaid format) for all systems in the project.
 
+# Game Class Diagram
+
+```mermaid
 %% ===========================
 %% 🧍 PLAYER SYSTEM
 %% ===========================
@@ -532,6 +535,4 @@ classDiagram
     class PathBuilder {
         + BuildPath()
     }
-
-
-
+```
