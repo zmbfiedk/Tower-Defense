@@ -353,8 +353,8 @@ classDiagram
     }
 ```
 
-```mermaid
 ## Towers
+```mermaid
 classDiagram
     class TowerAttackController {
         - rotator : RotatingMovement
@@ -411,8 +411,8 @@ classDiagram
     }
 ```
 
+## UI Managers
 ```mermaid
-##UI Managers
 classDiagram
     class CurrencyManager {
         + static Instance : CurrencyManager
@@ -445,8 +445,8 @@ classDiagram
     }
 ```
 
-```mermaid
 ## Scene & Music
+```mermaid
 classDiagram
     class RespawnableToggle {
         - originalPosition : Vector3
@@ -481,8 +481,8 @@ classDiagram
     }
 ```
 
-```Mermaid
 ## Enemy & WaveSystem
+```Mermaid
 classDiagram
     class EnemyPath {
         + speed : float
